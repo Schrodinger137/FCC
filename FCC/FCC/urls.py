@@ -21,4 +21,5 @@ from FightClubCafe import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    path('crear_usuario/', views.crear_usuario, name='crear_usuario')
 ]
