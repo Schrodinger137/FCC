@@ -6,12 +6,34 @@ from FCC.firebase_config import db
 def index(request):
     return render(request, 'principal/index.html')
 
-def crear_usuario(request):
-    data = {'nombre': 'Carlos', 'edad': 25}
-    db.collection('usuarios').add(data)
-    return JsonResponse({'mensaje': 'Usuario agregado'})
+
+def administrator(request):
+    return render(request, 'administrator/administrator.html')
+
+def admin_users(request):    
+    return render(request, 'administrator/admin_users.html')
+
+def admin_characters(request):
+    return render(request, 'administrator/admin_character.html')
 
 def listar_usuarios(request):
     docs = db.collection('usuarios').stream()
     usuarios = [{**doc.to_dict(), "id": doc.id} for doc in docs]
     return JsonResponse({"usuarios": usuarios})
+
+def form_usuario(request):
+    if request.method == 'GET':
+        return render(request, 'principal/form.html')
+    elif request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        edad = request.POST.get('edad')
+
+        if not nombre or not edad:
+            return JsonResponse({'error': 'Faltan datos'}, status=400)
+        
+        db.collection('usuarios').add({
+            'nombre': nombre,
+            'edad': int(edad)
+        })
+
+        return JsonResponse({'mensaje': 'Usuario agregado correctamente'})

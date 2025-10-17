@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Agregar Usuario</title>
+</head>
+<body>
+  <h2>Agregar Usuario</h2>
+  <form method="POST">
+    {% csrf_token %}
+    <label>Nombre:</label>
+    <input type="text" name="nombre" required><br><br>
+    <label>Edad:</label>
+    <input type="number" name="edad" required><br><br>
+    <button type="submit">Guardar</button>
+  </form>
+</body>
+</html>
