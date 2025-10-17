@@ -6,6 +6,8 @@ from FCC.firebase_config import db
 def index(request):
     return render(request, 'principal/index.html')
 
+def signin(request):
+    return render(request, 'auth/signin.html')
 
 def administrator(request):
     return render(request, 'administrator/administrator.html')

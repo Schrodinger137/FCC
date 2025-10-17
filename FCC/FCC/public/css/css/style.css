@@ -37,3 +37,38 @@
     margin: 0 auto; /* centra la imagen horizontalmente */
     display: block; /* para centrar correctamente */
 }
+
+/* Inputs */
+.form-control {
+    background-color: #3e2f2f; /* café oscuro */
+    color: #ffd699; /* texto beige */
+    border-color: #aa5522;
+}
+
+/* Botón crear */
+.btn-primary {
+    background: linear-gradient(135deg, #ff6b35, #ff9f1c, #ffbf69);
+    border: none;
+    color: #2b1b1b;
+    font-weight: bold;
+}
+
+/* Card headers */
+.card-header {
+    background-color: #2b1b1b;
+    border-color: #aa5522;
+}
+
+/* Carousel caption overlay */
+.carousel-caption {
+    background-color: rgba(255, 127, 80, 0.8); /* naranja cozy semitransparente */
+    color: #2b1b1b;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+/* Carousel images */
+.carousel-item img {
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}

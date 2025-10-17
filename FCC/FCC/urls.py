@@ -21,6 +21,7 @@ from FightClubCafe import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    path('signin/', views.signin, name='signin'),
     path('administrator/', views.administrator, name='administrator'),
     path('admin_users/', views.admin_users, name='admin_users'),
     path('admin_characters/', views.admin_characters, name='admin_characters'),
