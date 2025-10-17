@@ -11,7 +11,9 @@ def administrator(request):
     return render(request, 'administrator/administrator.html')
 
 def admin_users(request):    
-    return render(request, 'administrator/admin_users.html')
+    docs = db.collection('usuarios').stream()
+    usuarios = [{**doc.to_dict(), 'id':doc.id} for doc in docs]
+    return render(request, 'administrator/admin_users.html', {'usuarios':usuarios})
 
 def admin_characters(request):
     return render(request, 'administrator/admin_character.html')

@@ -19,24 +19,18 @@
               </tr>
             </thead>
             <tbody>
+                {% for usuario in usuarios %}
               <tr>
-                <td>1</td>
-                <td>John</td>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ usuario.nombre}}</td>
                 <td>Dhoe</td>
                 <td>John Dhoe</td>
               </tr>
+              {% empty %}
               <tr>
-                <td>1</td>
-                <td>John</td>
-                <td>Dhoe</td>
-                <td>John Dhoe</td>
+                <td colspan="3" class="text-center text-muted">No hay usuarios registrados</td>
               </tr>
-              <tr>
-                <td>1</td>
-                <td>John</td>
-                <td>Dhoe</td>
-                <td>John Dhoe</td>
-              </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>
