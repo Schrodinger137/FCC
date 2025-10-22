@@ -7,7 +7,9 @@ def index(request):
     return render(request, 'principal/index.html')
 
 def signin(request):
-    return render(request, 'auth/signin.html')
+    docs = db.collection('personajes').stream()
+    personajes = [{**doc.to_dict(), 'id': doc.id} for doc in docs]
+    return render(request, 'auth/signin.html', {'personajes':personajes})
 
 def administrator(request):
     return render(request, 'administrator/administrator.html')

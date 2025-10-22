@@ -34,58 +34,25 @@
 
                         <div class="mb-4">
                             <label class="form-label">Selecciona un Personaje</label>
-                            <!-- Carrusel de Bootstrap -->
                             <div id="carouselPersonajes" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
-
-                                    <!-- Personaje 1 -->
-                                    <div class="carousel-item active">
-                                        <img src="{% static 'img/alejandra.png' %}" class="d-block w-100" alt="Alejandra">
+                                    {% for personaje in personajes %}
+                                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                        <!-- Si más adelante agregas imagenes a Firestore, puedes usar personaje.imagen -->
+                                        <img src="{% static 'img/default_character.png' %}" class="d-block w-100"
+                                            alt="{{ personaje.nombre }}">
                                         <div class="carousel-caption d-none d-md-block">
-                                            <h5>Alejandra</h5>
-                                            <p>Descripción corta del personaje 1.</p>
+                                            <h5>{{ personaje.nombre }}</h5>
+                                            <p>{{ personaje.descripcion }}</p>
                                         </div>
                                     </div>
-
-                                    <!-- Personaje 2 -->
-                                    <div class="carousel-item">
-                                        <img src="{% static 'img/osiel.png' %}" class="d-block w-100" alt="Osiel">
-                                        <div class="carousel-caption d-none d-md-block">
-                                            <h5>Osiel</h5>
-                                            <p>Descripción corta del personaje 2.</p>
-                                        </div>
+                                    {% empty %}
+                                    <div class="text-center text-light py-5">
+                                        <p>No hay personajes disponibles.</p>
                                     </div>
-
-                                    <!-- Personaje 3 -->
-                                    <div class="carousel-item">
-                                        <img src="{% static 'img/carina.png' %}" class="d-block w-100" alt="Carina">
-                                        <div class="carousel-caption d-none d-md-block">
-                                            <h5>Carina</h5>
-                                            <p>Descripción corta del personaje 3.</p>
-                                        </div>
-                                    </div>
-
-                                    <!-- Personaje 4 -->
-                                    <div class="carousel-item">
-                                        <img src="{% static 'img/govea.png' %}" class="d-block w-100" alt="Govea">
-                                        <div class="carousel-caption d-none d-md-block">
-                                            <h5>Govea</h5>
-                                            <p>Descripción corta del personaje 4.</p>
-                                        </div>
-                                    </div>
-
-                                    <!-- Personaje 5 -->
-                                    <div class="carousel-item">
-                                        <img src="{% static 'img/ivo.png' %}" class="d-block w-100" alt="Ivo">
-                                        <div class="carousel-caption d-none d-md-block">
-                                            <h5>Ivo</h5>
-                                            <p>Descripción corta del personaje 5.</p>
-                                        </div>
-                                    </div>
-
+                                    {% endfor %}
                                 </div>
 
-                                <!-- Controles -->
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselPersonajes"
                                     data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -98,6 +65,7 @@
                                 </button>
                             </div>
                         </div>
+
 
                         <div class="d-grid mt-3">
                             <button type="submit" class="btn btn-primary btn-lg">Crear Cuenta</button>
