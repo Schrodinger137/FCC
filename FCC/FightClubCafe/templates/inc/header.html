@@ -11,9 +11,9 @@
         <li class="nav-item"><a class="nav-link text-light" href="#">Personajes</a></li>
         <li class="nav-item"><a class="nav-link text-light" href="#">Items</a></li>
         {% if request.session.usuario_id %}
-        <li class="nav-item"><a class="nav-link text-light" href="{% url 'login' %}"><button class="btn btn-danger btn-sm">Cerrar Sesión</button></a></li>
+        <li class="nav-item"><a class="nav-link text-light" href="{% url 'logout' %}"><button class="btn btn-danger btn-sm">Cerrar Sesión</button></a></li>
         {% else %}
-        <li class="nav-item"><a class="nav-link text-light" href="{% url 'logout' %}"><button class="btn btn-light btn-sm">Iniciar Sesión</button></a></li>
+        <li class="nav-item"><a class="nav-link text-light" href="{% url 'login' %}"><button class="btn btn-light btn-sm">Iniciar Sesión</button></a></li>
         <li class="nav-item"><a class="nav-link text-light" href="{% url 'signin' %}"><button class="btn btn-light btn-sm">Crear Cuenta</button></a></li>
         {% endif %}
       </ul>
