@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Mi Cuenta</h2>
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Nombre:</strong> {{ usuario.nombre }}</li>
+        <li class="list-group-item"><strong>Correo:</strong> {{ usuario.correo }}</li>
+        <li class="list-group-item"><strong>Edad:</strong> {{ usuario.edad }}</li>
+        <li class="list-group-item"><strong>Personaje:</strong> {{ usuario.personaje_id }}</li>
+    </ul>
+</div>
+{% endblock %}

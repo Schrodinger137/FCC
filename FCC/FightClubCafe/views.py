@@ -69,6 +69,15 @@ def logout(request):
     request.session.flush()
     return redirect('login')
 
+def account(request):
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        return redirect('login')
+
+    doc = db.collection('usuarios').document(usuario_id).get()
+    usuario = doc.to_dict()
+    return render (request, 'auth/account.html', {'usuario':usuario})
+
 
 def administrator(request):
     return render(request, "administrator/administrator.html")
