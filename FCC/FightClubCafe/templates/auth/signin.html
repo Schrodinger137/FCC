@@ -4,77 +4,94 @@
 {% block title %}Crear Cuenta{% endblock %}
 
 {% block content %}
-
 <div class="container mt-5 pt-4">
-    <div class="row justify-content-center">
+  <div class="row justify-content-center">
 
-        <!-- Formulario de registro -->
-        <div class="col-md-6">
-            <div class="card bg-dark border-light text-light shadow-sm rounded-4">
-                <div class="card-header bg-dark border-light text-center">
-                    <h4 class="mb-0">Crear Cuenta</h4>
-                </div>
-                <div class="card-body">
-                    <form method="POST" action="">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="correo" class="form-label">Correo</label>
-                            <input type="email" class="form-control" id="correo" name="correo" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label">Selecciona un Personaje</label>
-                            <div id="carouselPersonajes" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                    {% for personaje in personajes %}
-                                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                                        <!-- Si más adelante agregas imagenes a Firestore, puedes usar personaje.imagen -->
-                                        <img src="{% static 'img/default_character.png' %}" class="d-block w-100"
-                                            alt="{{ personaje.nombre }}">
-                                        <div class="carousel-caption d-none d-md-block">
-                                            <h5>{{ personaje.nombre }}</h5>
-                                            <p>{{ personaje.descripcion }}</p>
-                                        </div>
-                                    </div>
-                                    {% empty %}
-                                    <div class="text-center text-light py-5">
-                                        <p>No hay personajes disponibles.</p>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselPersonajes"
-                                    data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Anterior</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carouselPersonajes"
-                                    data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Siguiente</span>
-                                </button>
-                            </div>
-                        </div>
-
-
-                        <div class="d-grid mt-3">
-                            <button type="submit" class="btn btn-primary btn-lg">Crear Cuenta</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    <!-- Formulario de registro -->
+    <div class="col-md-6">
+      <div class="card bg-dark border-light text-light shadow-sm rounded-4">
+        <div class="card-header bg-dark border-light text-center">
+          <h4 class="mb-0">Crear Cuenta</h4>
         </div>
+        <div class="card-body">
+          <form method="POST" action="">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombre" name="nombre" required>
+            </div>
 
+            <div class="mb-3">
+              <label for="correo" class="form-label">Correo</label>
+              <input type="email" class="form-control" id="correo" name="correo" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña</label>
+              <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Selecciona un Personaje</label>
+              <input type="hidden" id="personajeSeleccionado" name="personaje" required>
+
+              <div id="carouselPersonajes" class="carousel slide" data-bs-ride="false">
+                <div class="carousel-inner">
+                  {% for personaje in personajes %}
+                  <div class="carousel-item {% if forloop.first %}active{% endif %}" data-id="{{ personaje.id }}">
+                    <img src="{% static 'img/default_character.png' %}" class="d-block w-100" alt="{{ personaje.nombre }}">
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5>{{ personaje.nombre }}</h5>
+                      <p>{{ personaje.descripcion }}</p>
+                    </div>
+                  </div>
+                  {% empty %}
+                  <div class="text-center text-light py-5">
+                    <p>No hay personajes disponibles.</p>
+                  </div>
+                  {% endfor %}
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselPersonajes" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselPersonajes" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Siguiente</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="d-grid mt-3">
+              <button type="submit" class="btn btn-primary btn-lg">Crear Cuenta</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
+
+  </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.querySelector('#carouselPersonajes');
+    const hiddenInput = document.querySelector('#personajeSeleccionado');
+
+    // Inicializa con el primer personaje activo
+    const firstActive = carousel.querySelector('.carousel-item.active');
+    if (firstActive) {
+      hiddenInput.value = firstActive.getAttribute('data-id');
+    }
+
+    // Cada vez que cambia el slide, actualiza el input oculto
+    carousel.addEventListener('slid.bs.carousel', function(event) {
+      const activeItem = carousel.querySelector('.carousel-item.active');
+      if (activeItem) {
+        hiddenInput.value = activeItem.getAttribute('data-id');
+      }
+    });
+  });
+</script>
 {% endblock %}
