@@ -60,8 +60,12 @@ def login(request):
 
         request.session["usuario_id"] = usuario["id"]
         request.session["usuario_nombre"] = usuario["nombre"]
+        request.session['usuario_rol'] = usuario.get('rol')
 
-        return redirect("/")
+        if usuario.get('rol') == 'admin':
+            return redirect('administrator')
+        else:
+            return redirect('index')
 
     return render(request, "auth/login.html")
 
