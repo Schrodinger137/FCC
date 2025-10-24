@@ -3,8 +3,29 @@ from django.http import JsonResponse
 from FCC.firebase_config import db
 from django.contrib import messages
 
-
 # Create your views here.
+
+def verify_session(request): 
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        return redirect('login')
+    return None
+    
+def verify_admin(request):
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        return redirect('login')
+
+    rol = request.session.get('usuario_rol') 
+    print("ROL ACTUAL:", rol)  
+
+    if rol not in ['admin', 'Admin']:
+        print('Acceso denegado')
+        return redirect('index')
+
+    return None
+
+
 def index(request):
     usuario_id = request.session.get('usuario_id')
     if not usuario_id:
@@ -74,16 +95,24 @@ def logout(request):
     return redirect('login')
 
 def account(request):
-    usuario_id = request.session.get('usuario_id')
-    if not usuario_id:
-        return redirect('login')
+    redireccion = verify_session(request)
+    if redireccion:
+        return redireccion
 
+    usuario_id = request.session.get('usuario_id')
     doc = db.collection('usuarios').document(usuario_id).get()
     usuario = doc.to_dict()
     return render (request, 'auth/account.html', {'usuario':usuario})
 
 
 def administrator(request):
+    redireccion = verify_session(request)
+    if redireccion:
+        return redireccion
+    
+    verify = verify_admin(request)
+    if verify:
+        return verify
     return render(request, "administrator/administrator.html")
 
 
