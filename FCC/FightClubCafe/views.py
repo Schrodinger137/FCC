@@ -117,20 +117,46 @@ def administrator(request):
 
 
 def admin_users(request):
+    redireccion = verify_session(request)
+    if redireccion:
+        return redireccion
+    
+    verify = verify_admin(request)
+    if verify:
+        return verify
+
     docs = db.collection("usuarios").stream()
     usuarios = [{**doc.to_dict(), "id": doc.id} for doc in docs]
     return render(request, "administrator/admin_users.html", {"usuarios": usuarios})
 
 
 def admin_characters(request):
-    return render(request, "administrator/admin_character.html")
-
-
-def listar_usuarios(request):
-    docs = db.collection("usuarios").stream()
-    usuarios = [{**doc.to_dict(), "id": doc.id} for doc in docs]
-    return JsonResponse({"usuarios": usuarios})
-
+    redireccion = verify_session(request)
+    if redireccion:
+        return redireccion
+    
+    verify = verify_admin(request)
+    if verify:
+        return verify
+    
+    personajes_docs = db.collection('personajes').stream()
+    personajes = []
+    
+    usuarios_docs = db.collection('usuarios').stream()
+    usuarios = [doc.to_dict() for doc in usuarios_docs]
+    
+    for doc in personajes_docs:
+        personaje_data = doc.to_dict()
+        personaje_id = doc.id
+        
+        cantidad_usuarios = sum(1 for u in usuarios if u.get('personaje_id') == personaje_id)
+        
+        personaje_data['id'] = personaje_id
+        personaje_data['jugadores_asociados'] = cantidad_usuarios
+        
+        personajes.append(personaje_data)    
+    
+    return render(request, "administrator/admin_character.html", {'personajes':personajes})
 
 def form_usuario(request):
     if request.method == "GET":
