@@ -6,7 +6,7 @@ cred = credentials.Certificate("FCC/fightclubcafe-e852c-firebase-adminsdk-fbsvc-
 
 # Inicializa la app
 firebase_admin.initialize_app(cred, {
-    'storageBucket': 'FightCLubCafe.appspot.com'
+    'storageBucket': 'fightclubcafe.appspot.com'
 })
 
 # Clientes

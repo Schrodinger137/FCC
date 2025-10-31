@@ -28,5 +28,6 @@ urlpatterns = [
     path('administrator/', views.administrator, name='administrator'),
     path('admin_users/', views.admin_users, name='admin_users'),
     path('admin_characters/', views.admin_characters, name='admin_characters'),
+    path('create_character/', views.create_character, name='create_character'),
     path('usuario/', views.form_usuario, name='form_usuario'),
 ]

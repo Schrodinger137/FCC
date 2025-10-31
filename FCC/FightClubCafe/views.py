@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from FCC.firebase_config import db
+from FCC.firebase_config import db, bucket
 from django.contrib import messages
+from django.core.files.storage import default_storage
+import uuid
 
 # Create your views here.
 
@@ -24,7 +26,6 @@ def verify_admin(request):
         return redirect('index')
 
     return None
-
 
 def index(request):
     usuario_id = request.session.get('usuario_id')
@@ -104,7 +105,6 @@ def account(request):
     usuario = doc.to_dict()
     return render (request, 'auth/account.html', {'usuario':usuario})
 
-
 def administrator(request):
     redireccion = verify_session(request)
     if redireccion:
@@ -114,7 +114,6 @@ def administrator(request):
     if verify:
         return verify
     return render(request, "administrator/administrator.html")
-
 
 def admin_users(request):
     redireccion = verify_session(request)
@@ -128,7 +127,6 @@ def admin_users(request):
     docs = db.collection("usuarios").stream()
     usuarios = [{**doc.to_dict(), "id": doc.id} for doc in docs]
     return render(request, "administrator/admin_users.html", {"usuarios": usuarios})
-
 
 def admin_characters(request):
     redireccion = verify_session(request)
@@ -171,3 +169,45 @@ def form_usuario(request):
         db.collection("usuarios").add({"nombre": nombre, "edad": int(edad)})
 
         return JsonResponse({"mensaje": "Usuario agregado correctamente"})
+
+def create_character(request):
+    redireccion = verify_session(request)
+    if redireccion:
+        return JsonResponse({'error': 'Sesión no válida, inicia sesión de nuevo.'}, status=401)
+
+    verify = verify_admin(request)
+    if verify:
+        return JsonResponse({'error': 'No tienes permisos para esta acción.'}, status=403)
+
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Método no permitido.'}, status=405)
+
+    nombre = request.POST.get('nombre')
+    descripcion = request.POST.get('descripcion')
+    imagen = request.FILES.get('imagen')
+
+    if not nombre or not descripcion or not imagen:
+        return JsonResponse({'error': 'Todos los campos son obligatorios.'}, status=400)
+
+    try:
+        # Subir imagen a Firebase Storage
+        imagen_nombre = f"personajes/{uuid.uuid4()}_{imagen.name}"
+        blob = bucket.blob(imagen_nombre)
+        blob.upload_from_file(imagen, content_type=imagen.content_type)
+        blob.make_public()
+
+        # Guardar personaje en Firestore
+        personaje_ref = db.collection('personajes').add({
+            'nombre': nombre,
+            'descripcion': descripcion,
+            'imagen_url': blob.public_url
+        })
+
+        return JsonResponse({
+            'mensaje': 'Personaje creado correctamente.',
+            'id': personaje_ref[1].id,
+            'imagen_url': blob.public_url
+        })
+
+    except Exception as e:
+        return JsonResponse({'error': f'Error al crear personaje: {str(e)}'}, status=500)

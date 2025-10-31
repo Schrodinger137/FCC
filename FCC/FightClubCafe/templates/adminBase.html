@@ -28,7 +28,9 @@
       <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-box"></i><span>Items</span></a></li>
       {% block sidebar %}
       {% endblock %}
-      <li class="nav-item"><a class="nav-link" href="{% url 'account' %}"><i class="bi bi-person"></i><span>Mi Cuenta</span></a></li>
+
+      <li class="nav-item"><a class="nav-link" href="{% url 'index' %}"><i class="bi bi-globe"></i>Ver Sitio</a></li>
+      <li class="nav-item"><a class="nav-link active" href="{% url 'account' %}"><i class="bi bi-person"></i><span>Mi Cuenta</span></a></li>
     </ul>
   </nav>
 

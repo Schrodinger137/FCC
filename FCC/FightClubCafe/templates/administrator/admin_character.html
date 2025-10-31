@@ -48,15 +48,19 @@
           <h5 class="mb-0">Agregar Personaje</h5>
         </div>
         <div class="card-body">
-          <form method="POST" action="">
+           <form id="createCharacterForm" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre</label>
               <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej. Carlos" required>
             </div>
             <div class="mb-3">
-              <label for="edad" class="form-label">Edad</label>
-              <input type="number" class="form-control" id="edad" name="edad" min="1" required>
+              <label for="descripcion" class="form-label">Descripción</label>
+              <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+            </div>
+            <div class="mb-3">
+              <label for="imagen" class="form-label">Imagen</label>
+              <input type="file" class="form-control" id="imagen" name="imagen" required>
             </div>
             <div class="d-grid">
               <button type="submit" class="btn btn-primary">Guardar</button>
@@ -68,4 +72,49 @@
 
   </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("#createCharacterForm");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("{% url 'create_character' %}", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(data.mensaje);
+
+        const tbody = document.querySelector("#personajes-table-body");
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+          <td>${tbody.children.length + 1}</td>
+          <td>${formData.get("nombre")}</td>
+          <td>${formData.get("descripcion")}</td>
+          <td><img src="${data.imagen_url}" style="width:50px;height:50px;object-fit:cover;border-radius:5px;"></td>
+          <td>0</td>
+          <td>
+            <button class="btn btn-warning btn-sm">Editar</button>
+            <button class="btn btn-danger btn-sm">Eliminar</button>
+          </td>
+        `;
+        tbody.appendChild(newRow);
+        form.reset();
+      } else {
+        alert(data.error);
+        console.log(data.error);
+      }
+    } catch (err) {
+      alert("Error al enviar el formulario: " + err);
+      console.log("Error al enviar el formulario: " + err);
+    }
+  });
+});
+</script>
 {% endblock %}
