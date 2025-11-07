@@ -107,7 +107,7 @@
     }
 
     .admin .sidebar:hover {
-      width: 220px;
+      width: 250px;
     }
 
     .admin .sidebar h5 {
@@ -174,7 +174,7 @@
     }
 
     .admin .sidebar:hover ~ main {
-      margin-left: 220px;
+      margin-left: 250px;
     }
 
     @media (max-width: 992px) {
