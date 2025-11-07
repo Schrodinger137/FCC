@@ -28,7 +28,7 @@
             <td>{{ usuario.correo }}</td>
             <td>
               {% if usuario.personaje %}
-              {{ usuario.personaje }}
+              {{ usuario.personaje.nombre }}
               {% else %}
               vacío
               {% endif %}
