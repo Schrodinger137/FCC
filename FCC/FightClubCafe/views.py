@@ -126,7 +126,19 @@ def admin_users(request):
 
     docs = db.collection("usuarios").stream()
     usuarios = [{**doc.to_dict(), "id": doc.id} for doc in docs]
+
+    personajes_docs = db.collection("personajes").stream()
+    personajes_dict = {doc.id: doc.to_dict().get('nombre', 'Desconocido') for doc in personajes_docs}
+
+    for usuario in usuarios:
+        personaje_id = usuario.get('personaje_id')
+        if personaje_id:
+            usuario['personaje'] = personajes_dict.get(personaje_id, 'No encontrado')
+        else:
+            usuario['personaje'] = 'Sin personaje'
+
     return render(request, "administrator/admin_users.html", {"usuarios": usuarios})
+
 
 def admin_characters(request):
     redireccion = verify_session(request)
