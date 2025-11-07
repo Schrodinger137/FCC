@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="csrf-token" content="{{ csrf_token }}">
@@ -19,18 +20,24 @@
   <button class="toggle-btn d-lg-none"><i class="bi bi-list"></i></button>
 
   <nav id="sidebar" class="sidebar">
-    
+
     <h5>Panel</h5>
     <ul class="nav flex-column">
-      <li class="nav-item"><a class="nav-link" href="{% url 'administrator' %}"><i class="bi bi-house-door"></i><span>Inicio</span></a></li>
-      <li class="nav-item"><a class="nav-link" href="{% url 'admin_users' %}"><i class="bi bi-people"></i><span>Usuarios</span></a></li>
-      <li class="nav-item"><a class="nav-link" href="{% url 'admin_characters' %}"><i class="bi bi-person-bounding-box"></i><span>Personajes</span></a></li>
+      <hr>
+      <li class="nav-item"><a class="nav-link" href="{% url 'administrator' %}"><i
+            class="bi bi-house-door"></i><span>Inicio</span></a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'admin_users' %}"><i
+            class="bi bi-people"></i><span>Usuarios</span></a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'admin_characters' %}"><i
+            class="bi bi-person-bounding-box"></i><span>Personajes</span></a></li>
       <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-box"></i><span>Items</span></a></li>
+
+      <hr>
+      <li class="nav-item"><a class="nav-link" href="{% url 'index' %}"><i class="bi bi-globe"></i>Ver Sitio</a></li>
+      <li class="nav-item"><a class="nav-link active" href="{% url 'account' %}"><i class="bi bi-person"></i><span>Mi
+            Cuenta</span></a></li>
       {% block sidebar %}
       {% endblock %}
-
-      <li class="nav-item"><a class="nav-link" href="{% url 'index' %}"><i class="bi bi-globe"></i>Ver Sitio</a></li>
-      <li class="nav-item"><a class="nav-link active" href="{% url 'account' %}"><i class="bi bi-person"></i><span>Mi Cuenta</span></a></li>
     </ul>
   </nav>
 
@@ -50,4 +57,5 @@
     });
   </script>
 </body>
+
 </html>
