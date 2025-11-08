@@ -1,0 +1,64 @@
+<div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="createUserModalLabel">Crear Usuario</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label-sm">Nombre</label>
+                        <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm"
+                            aria-label=".form-control-sm example">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label-sm">Correo</label>
+                        <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm"
+                            aria-label=".form-control-sm example">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label-sm">Contraseña</label>
+                        <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm"
+                            aria-label=".form-control-sm example">
+                    </div>
+                    <div id="carouselPersonajes" class="carousel slide" data-bs-ride="false">
+                        <div class="carousel-inner">
+                            {% for personaje in personajes %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}"
+                                data-id="{{ personaje.id }}">
+                                <img src="" class="d-block w-100"
+                                    alt="{{ personaje.nombre }}">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>{{ personaje.nombre }}</h5>
+                                    <p>{{ personaje.descripcion }}</p>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="text-center text-light py-5">
+                                <p>No hay personajes disponibles.</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselPersonajes"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselPersonajes"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Siguiente</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
