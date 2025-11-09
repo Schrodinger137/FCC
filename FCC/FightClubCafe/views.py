@@ -3,6 +3,8 @@ from django.http import JsonResponse
 from FCC.firebase_config import db, bucket
 from django.contrib import messages
 from django.core.files.storage import default_storage
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 import uuid
 
 # Create your views here.
@@ -122,6 +124,11 @@ def administrator(request):
         return verify
     return render(request, "administrator/administrator.html")
 
+
+## USERS SECTION ##
+## USERS SECTION ##
+
+
 def admin_users(request):
     redireccion = verify_session(request)
     if redireccion:
@@ -165,6 +172,34 @@ def admin_users(request):
         usuarios.append(usuario)
 
     return render(request, "administrator/admin_users.html", {"usuarios": usuarios})
+
+
+def delete_users(request):
+    redireccion = verify_session(request)
+    if redireccion:
+        return JsonResponse({"error": "Sesión no válida"}, status=401)
+
+    verify = verify_admin(request)
+    if verify:
+        return JsonResponse({"error": "No tienes permisos para eliminar usuarios"}, status=403)
+
+    usuario_id = request.POST.get("usuario_id")
+
+    if not usuario_id:
+        return JsonResponse({"error": "No se proporcionó el ID del usuario"}, status=400)
+
+    try:
+        usuario_ref = db.collection("usuarios").document(usuario_id)
+        usuario_doc = usuario_ref.get()
+
+        if not usuario_doc.exists:
+            return JsonResponse({"error": "Usuario no encontrado"}, status=404)
+
+        usuario_ref.delete()
+
+        return JsonResponse({"mensaje": "Usuario eliminado correctamente"})
+    except Exception as e:
+        return JsonResponse({"error": f"Error al eliminar usuario: {str(e)}"}, status=500)
 
 
 def admin_characters(request):

@@ -3,13 +3,18 @@
 
 {% block title %}Administración de Personajes{% endblock %}
 
-
+{% block sidebar %}
+<hr>
+<li class="nav-item"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#createCharacterModal"><i
+      class="bi bi-plus"></i>Añadir Personaje</a></li>
+<hr>
+{% endblock %}
 
 {% block content %}
 <div class="container mt-5 pt-4">
   <div class="row">
 
-    <div class="col-md-8">
+    <div class="col-md-12">
       <h4>Lista de Personajes</h4>
       <table class="table table-dark table-bordered table-hover table-striped text-center">
         <thead>
@@ -28,7 +33,10 @@
             <td>{{ forloop.counter }}</td>
             <td>{{ personaje.nombre }}</td>
             <td>{{ personaje.descripcion }}</td>
-            <td>{{ personaje.nombre }}</td>
+            <td>
+              <img src="{{ personaje.imagen }}" alt="{{ personaje.nombre }}" class="img-fluid rounded"
+                style="max-width: 80px; max-height: 80px; object-fit: cover;">
+            </td>
             <td>{{ personaje.jugadores_asociados }}</td>
             <td>
               <button class="btn btn-warning btn-sm">Editar</button>
@@ -39,59 +47,30 @@
         </tbody>
       </table>
     </div>
-
-    <div class="col-md-4 mt-4 mt-md-0">
-      <div class="card bg-dark border-light text-light">
-        <div class="card-header bg-dark text-white border-light">
-          <h5 class="mb-0">Agregar Personaje</h5>
-        </div>
-        <div class="card-body">
-           <form id="createCharacterForm" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="mb-3">
-              <label for="nombre" class="form-label">Nombre</label>
-              <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej. Carlos" required>
-            </div>
-            <div class="mb-3">
-              <label for="descripcion" class="form-label">Descripción</label>
-              <input type="text" class="form-control" id="descripcion" name="descripcion" required>
-            </div>
-            <div class="mb-3">
-              <label for="imagen" class="form-label">Imagen</label>
-              <input type="file" class="form-control" id="imagen" name="imagen">
-            </div>
-            <div class="d-grid">
-              <button type="submit" class="btn btn-primary">Guardar</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
   </div>
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.querySelector("#createCharacterForm");
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("#createCharacterForm");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
 
-    try {
-      const response = await fetch("{% url 'create_character' %}", {
-        method: "POST",
-        body: formData
-      });
+      try {
+        const response = await fetch("{% url 'create_character' %}", {
+          method: "POST",
+          body: formData
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (response.ok) {
-        alert(data.mensaje);
+        if (response.ok) {
+          alert(data.mensaje);
 
-        const tbody = document.querySelector("#personajes-table-body");
-        const newRow = document.createElement("tr");
-        newRow.innerHTML = `
+          const tbody = document.querySelector("#personajes-table-body");
+          const newRow = document.createElement("tr");
+          newRow.innerHTML = `
           <td>${tbody.children.length + 1}</td>
           <td>${formData.get("nombre")}</td>
           <td>${formData.get("descripcion")}</td>
@@ -102,17 +81,17 @@ document.addEventListener("DOMContentLoaded", () => {
             <button class="btn btn-danger btn-sm">Eliminar</button>
           </td>
         `;
-        tbody.appendChild(newRow);
-        form.reset();
-      } else {
-        alert(data.error);
-        console.log(data.error);
+          tbody.appendChild(newRow);
+          form.reset();
+        } else {
+          alert(data.error);
+          console.log(data.error);
+        }
+      } catch (err) {
+        alert("Error al enviar el formulario: " + err);
+        console.log("Error al enviar el formulario: " + err);
       }
-    } catch (err) {
-      alert("Error al enviar el formulario: " + err);
-      console.log("Error al enviar el formulario: " + err);
-    }
+    });
   });
-});
 </script>
 {% endblock %}

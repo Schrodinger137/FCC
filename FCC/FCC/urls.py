@@ -21,12 +21,21 @@ from FightClubCafe import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    
+    ##SESSION SECTION
     path('signin/', views.signin, name='signin'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
     path('account/', views.account, name='account'),
+    
+    ##ADMIN SECTION
     path('administrator/', views.administrator, name='administrator'),
+    
+    ##USERS SECTION
     path('admin_users/', views.admin_users, name='admin_users'),
+    path("admin/users/delete/", views.delete_users, name="delete_users"),
+    
+    ## CHARACTER SECTION
     path('admin_characters/', views.admin_characters, name='admin_characters'),
     path('create_character/', views.create_character, name='create_character'),
     path('usuario/', views.form_usuario, name='form_usuario'),

@@ -14,6 +14,7 @@
 
 <div class="container mt-5 pt-4">
   <div class="row">
+    <h4>Buscar Usuarios</h4>
     <form class="d-flex" role="search">
       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
       <button class="btn btn-outline-light" type="submit">Search</button>
@@ -54,7 +55,10 @@
             </td>
             <td>
               <button class="btn btn-warning btn-sm">Editar</button>
-              <button class="btn btn-danger btn-sm">Eliminar</button>
+              <button class="btn btn-danger btn-sm" onclick="eliminarUsuario('{{ usuario.id }}')">
+                <i class="bi bi-trash"></i> Eliminar
+              </button>
+
             </td>
           </tr>
           {% empty %}
@@ -67,4 +71,30 @@
     </div>
   </div>
 </div>
+
+<script>
+  function eliminarUsuario(usuarioId) {
+    if (!confirm("¿Estás seguro de que deseas eliminar este usuario?")) return;
+
+    fetch("{% url 'delete_users' %}", {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": "{{ csrf_token }}",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `usuario_id=${usuarioId}`,
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.mensaje) {
+          alert(data.mensaje);
+          location.reload(); // refrescar lista
+        } else {
+          alert(data.error || "Error desconocido");
+        }
+      })
+      .catch(error => console.error("Error:", error));
+  }
+</script>
+
 {% endblock %}

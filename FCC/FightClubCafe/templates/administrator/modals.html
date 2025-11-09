@@ -13,19 +13,23 @@
                     <fieldset disabled>
                         <div class="mb-3">
                             <label for="disabledTextInput" class="form-label">Nombre</label>
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ current_user.nombre }}">
+                            <input type="text" id="disabledTextInput" class="form-control"
+                                placeholder="{{ current_user.nombre }}">
                         </div>
                         <div class="mb-3">
                             <label for="disabledTextInput" class="form-label">Correo</label>
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ current_user.correo }}">
+                            <input type="text" id="disabledTextInput" class="form-control"
+                                placeholder="{{ current_user.correo }}">
                         </div>
                         <div class="mb-3">
                             <label for="disabledTextInput" class="form-label">Contraseña</label>
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ current_user.contraseña }}">
+                            <input type="text" id="disabledTextInput" class="form-control"
+                                placeholder="{{ current_user.contraseña }}">
                         </div>
                         <div class="mb-3">
                             <label for="disabledTextInput" class="form-label">Personaje</label>
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ current_user.personaje.nombre }}">
+                            <input type="text" id="disabledTextInput" class="form-control"
+                                placeholder="{{ current_user.personaje.nombre }}">
                         </div>
                     </fieldset>
                 </form>
@@ -37,7 +41,6 @@
         </div>
     </div>
 </div>
-
 
 
 <!--CREAR USUARIO MODAL-->
@@ -101,6 +104,45 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="createCharacterModal" tabindex="-1" aria-labelledby="createCharacterModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="createCharacterModalLabel">Mi cuenta</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="createCharacterForm" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej. Carlos"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="imagen" class="form-label">Imagen</label>
+                        <input type="file" class="form-control" id="imagen" name="imagen">
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
