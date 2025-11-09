@@ -13,19 +13,19 @@
                     <fieldset disabled>
                         <div class="mb-3">
                             <label for="disabledTextInput" class="form-label">Nombre</label>
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
+                            <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ current_user.nombre }}">
                         </div>
                         <div class="mb-3">
                             <label for="disabledTextInput" class="form-label">Correo</label>
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
+                            <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ current_user.correo }}">
                         </div>
                         <div class="mb-3">
                             <label for="disabledTextInput" class="form-label">Contraseña</label>
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
+                            <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ current_user.contraseña }}">
                         </div>
                         <div class="mb-3">
                             <label for="disabledTextInput" class="form-label">Personaje</label>
-                            <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
+                            <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ current_user.personaje.nombre }}">
                         </div>
                     </fieldset>
                 </form>

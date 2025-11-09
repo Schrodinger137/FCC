@@ -7,7 +7,6 @@ import uuid
 
 # Create your views here.
 
-
 def verify_session(request):
     usuario_id = request.session.get("usuario_id")
     if not usuario_id:
