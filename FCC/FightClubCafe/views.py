@@ -9,6 +9,11 @@ import uuid
 
 # Create your views here.
 
+##################
+## AUTH SECTION ##
+##################
+
+
 def verify_session(request):
     usuario_id = request.session.get("usuario_id")
     if not usuario_id:
@@ -29,18 +34,6 @@ def verify_admin(request):
         return redirect("index")
 
     return None
-
-
-def index(request):
-    usuario_id = request.session.get("usuario_id")
-    if not usuario_id:
-        return redirect("login")
-
-    doc = db.collection("usuarios").document(usuario_id).get()
-    usuario = doc.to_dict()
-
-    return render(request, "principal/index.html", {"usuario": usuario})
-
 
 def signin(request):
     if request.method == "POST":
@@ -103,6 +96,35 @@ def logout(request):
     return redirect("login")
 
 
+#####################
+## GENERAL SECTION ##
+#####################
+
+
+def index(request):
+    
+    docs = db.collection("personajes").stream()
+    personajes = [{**doc.to_dict(), "id": doc.id} for doc in docs]
+    
+    context = {
+        'personajes': personajes
+    }
+
+    return render(request, "principal/index.html", context)
+
+
+def characters(request):
+    
+    docs = db.collection('personajes').stream()
+    personajes = [{**doc.to_dict(), 'id': doc.id} for doc in docs]
+    
+    context = {
+        'personajes':personajes
+    }
+    
+    return render(request, 'principal/characters.html', context)
+
+
 def account(request):
     redireccion = verify_session(request)
     if redireccion:
@@ -125,8 +147,9 @@ def administrator(request):
     return render(request, "administrator/administrator.html")
 
 
+###################
 ## USERS SECTION ##
-## USERS SECTION ##
+###################
 
 
 def admin_users(request):
@@ -250,6 +273,10 @@ def form_usuario(request):
         return JsonResponse({"mensaje": "Usuario agregado correctamente"})
 
 
+#######################
+## CHARACTER SECTION ##
+#######################
+
 def create_character(request):
     redireccion = verify_session(request)
     if redireccion:
@@ -276,8 +303,8 @@ def create_character(request):
         )
 
     try:
-        imagen_url = None  # por defecto no hay imagen
-        if imagen:  # solo subimos si hay archivo
+        imagen_url = None
+        if imagen:
             imagen_nombre = f"personajes/{uuid.uuid4()}_{imagen.name}"
             blob = bucket.blob(imagen_nombre)
             blob.upload_from_file(imagen, content_type=imagen.content_type)

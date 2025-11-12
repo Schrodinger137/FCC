@@ -20,7 +20,10 @@ from FightClubCafe import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
+    #GENERAL SECTION
     path('', views.index, name='index'),
+    path('characters/', views.characters, name='characters'),
     
     ##SESSION SECTION
     path('signin/', views.signin, name='signin'),

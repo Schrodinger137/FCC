@@ -39,10 +39,9 @@
                 <div class="carousel-inner">
                   {% for personaje in personajes %}
                   <div class="carousel-item {% if forloop.first %}active{% endif %}" data-id="{{ personaje.id }}">
-                    <img src="{% static 'img/default_character.png' %}" class="d-block w-100" alt="{{ personaje.nombre }}">
+                    <img src="{{ personaje.imagen }}" class="d-block w-100" alt="{{ personaje.nombre }}">
                     <div class="carousel-caption d-none d-md-block">
                       <h5>{{ personaje.nombre }}</h5>
-                      <p>{{ personaje.descripcion }}</p>
                     </div>
                   </div>
                   {% empty %}
