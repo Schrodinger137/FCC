@@ -125,6 +125,18 @@ def characters(request):
     return render(request, 'principal/characters.html', context)
 
 
+def items(request):
+    
+    docs = db.collection('cafe').stream()
+    items = [{**doc.to_dict(), 'id':doc.id} for doc in docs]
+    
+    context = {
+        'items':items
+    }
+    
+    return render(request, 'principal/items.html', context)
+
+
 def account(request):
     redireccion = verify_session(request)
     if redireccion:
