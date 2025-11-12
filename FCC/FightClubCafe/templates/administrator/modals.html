@@ -1,45 +1,56 @@
 <!--MI CUENTA MODAL-->
 
 <div class="modal fade" id="myAccountModal" tabindex="-1" aria-labelledby="myAccountModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content bg-dark">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="myAccountModalLabel">Mi cuenta</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="myAccountModalLabel">Mi cuenta</h1>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
 
-                    <fieldset disabled>
-                        <div class="mb-3">
-                            <label for="disabledTextInput" class="form-label">Nombre</label>
-                            <input type="text" id="disabledTextInput" class="form-control"
-                                placeholder="{{ current_user.nombre }}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="disabledTextInput" class="form-label">Correo</label>
-                            <input type="text" id="disabledTextInput" class="form-control"
-                                placeholder="{{ current_user.correo }}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="disabledTextInput" class="form-label">Contraseña</label>
-                            <input type="text" id="disabledTextInput" class="form-control"
-                                placeholder="{{ current_user.contraseña }}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="disabledTextInput" class="form-label">Personaje</label>
-                            <input type="text" id="disabledTextInput" class="form-control"
-                                placeholder="{{ current_user.personaje.nombre }}">
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+      <div class="modal-body">
+        <div class="d-flex flex-row align-items-stretch">
+          <div class="col-5">
+            <img src="{{ current_user.personaje.imagen }}" 
+                 alt="{{ current_user.personaje.nombre }}" 
+                 class="img-fluid rounded-start w-100 h-100" 
+                 style="object-fit: cover;">
+          </div>
+
+          <div class="col-7 ps-4">
+            <form>
+              <fieldset disabled>
+                <div class="mb-3">
+                  <label for="nombreInput" class="form-label">Nombre</label>
+                  <input type="text" id="nombreInput" class="form-control" placeholder="{{ current_user.nombre }}">
+                </div>
+
+                <div class="mb-3">
+                  <label for="correoInput" class="form-label">Correo</label>
+                  <input type="text" id="correoInput" class="form-control" placeholder="{{ current_user.correo }}">
+                </div>
+
+                <div class="mb-3">
+                  <label for="passInput" class="form-label">Contraseña</label>
+                  <input type="password" id="passInput" class="form-control" placeholder="{{ current_user.contraseña }}">
+                </div>
+
+                <div class="mb-3">
+                  <label for="personajeInput" class="form-label">Personaje</label>
+                  <input type="text" id="personajeInput" class="form-control" placeholder="{{ current_user.personaje.nombre }}">
+                </div>
+              </fieldset>
+            </form>
+          </div>
         </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary">Guardar cambios</button>
+      </div>
     </div>
+  </div>
 </div>
 
 
