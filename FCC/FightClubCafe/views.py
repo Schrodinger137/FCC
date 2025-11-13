@@ -150,11 +150,30 @@ def account(request):
 
 
 def administrator(request):
-
     verify = verify_admin(request)
     if verify:
         return verify
-    return render(request, "administrator/administrator.html")
+
+    personajes_docs = db.collection("personajes").limit(1).stream()
+    personajes_img = None
+    for doc in personajes_docs:
+        personaje = doc.to_dict()
+        personajes_img = personaje.get("imagen")
+        break  # Solo queremos la primera imagen
+
+    cafe_docs = db.collection("cafe").limit(1).stream()
+    cafe_img = None
+    for doc in cafe_docs:
+        item = doc.to_dict()
+        cafe_img = item.get("imagen")
+        break
+
+    context = {
+        "personajes_img": personajes_img,
+        "cafe_img": cafe_img,
+    }
+
+    return render(request, "administrator/administrator.html", context)
 
 
 #########################

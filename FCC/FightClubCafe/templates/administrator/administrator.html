@@ -5,4 +5,66 @@
 
 {% block content %}
 
+<style>
+    /* 🔧 Ajuste visual para las imágenes de las cards */
+    .admin-card-img {
+        height: 180px;                /* Altura fija, ajustable */
+        object-fit: cover;            /* Recorta sin deformar */
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+    }
+
+    /* 🔧 Opcional: fondo oscuro general */
+    body {
+        background-color: #121212;
+    }
+</style>
+
+<div class="container mt-5 pt-4">
+    <h1 class="text-center text-light mb-4">Panel de Administración</h1>
+    <p class="text-center text-secondary mb-5">
+        Bienvenido al panel de control. Selecciona una sección para administrar los datos del sistema.
+    </p>
+
+    <div class="row justify-content-center g-4">
+
+        <!-- Card Usuarios -->
+        <div class="col-md-4">
+            <div class="card bg-dark text-light border-0 shadow-lg h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-people-fill display-4 text-info mb-3"></i>
+                    <h5 class="card-title">Usuarios</h5>
+                    <p class="card-text text-secondary">Administra los usuarios registrados y sus permisos.</p>
+                    <a href="{% url 'admin_users' %}" class="btn btn-outline-info mt-2">Ir a Usuarios</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Personajes -->
+        <div class="col-md-4">
+            <div class="card bg-dark text-light border-0 shadow-lg h-100">
+                    <img src="{{ personajes_img }}" class="admin-card-img w-100" alt="Personajes">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Personajes</h5>
+                    <p class="card-text text-secondary">Gestiona los personajes disponibles en el sistema.</p>
+                    <a href="{% url 'admin_characters' %}" class="btn btn-outline-success mt-2">Ir a Personajes</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Ítems -->
+        <div class="col-md-4">
+            <div class="card bg-dark text-light border-0 shadow-lg h-100">
+                    <img src="{{ cafe_img }}" class="admin-card-img w-100" alt="Ítems">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Ítems</h5>
+                    <p class="card-text text-secondary">Controla los ítems disponibles y sus propiedades.</p>
+                    <a href="{% url 'admin_items' %}" class="btn btn-outline-warning mt-2">Ir a Ítems</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 {% endblock %}
