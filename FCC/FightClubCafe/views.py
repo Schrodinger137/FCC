@@ -35,6 +35,7 @@ def verify_admin(request):
 
     return None
 
+
 def signin(request):
     if request.method == "POST":
         nombre = request.POST.get("nombre")
@@ -149,9 +150,6 @@ def account(request):
 
 
 def administrator(request):
-    redireccion = verify_session(request)
-    if redireccion:
-        return redireccion
 
     verify = verify_admin(request)
     if verify:
@@ -159,15 +157,12 @@ def administrator(request):
     return render(request, "administrator/administrator.html")
 
 
-###################
-## USERS SECTION ##
-###################
+#########################
+## ADMIN USERS SECTION ##
+#########################
 
 
 def admin_users(request):
-    redireccion = verify_session(request)
-    if redireccion:
-        return redireccion
 
     verify = verify_admin(request)
     if verify:
@@ -210,9 +205,6 @@ def admin_users(request):
 
 
 def delete_users(request):
-    redireccion = verify_session(request)
-    if redireccion:
-        return JsonResponse({"error": "Sesión no válida"}, status=401)
 
     verify = verify_admin(request)
     if verify:
@@ -237,10 +229,12 @@ def delete_users(request):
         return JsonResponse({"error": f"Error al eliminar usuario: {str(e)}"}, status=500)
 
 
+###############################
+## ADMIN CHARACTERS SECTIONS ##
+###############################
+
+
 def admin_characters(request):
-    redireccion = verify_session(request)
-    if redireccion:
-        return redireccion
 
     verify = verify_admin(request)
     if verify:
@@ -268,33 +262,8 @@ def admin_characters(request):
     return render(
         request, "administrator/admin_character.html", {"personajes": personajes}
     )
-
-
-def form_usuario(request):
-    if request.method == "GET":
-        return render(request, "principal/form.html")
-    elif request.method == "POST":
-        nombre = request.POST.get("nombre")
-        edad = request.POST.get("edad")
-
-        if not nombre or not edad:
-            return JsonResponse({"error": "Faltan datos"}, status=400)
-
-        db.collection("usuarios").add({"nombre": nombre, "edad": int(edad)})
-
-        return JsonResponse({"mensaje": "Usuario agregado correctamente"})
-
-
-#######################
-## CHARACTER SECTION ##
-#######################
-
+    
 def create_character(request):
-    redireccion = verify_session(request)
-    if redireccion:
-        return JsonResponse(
-            {"error": "Sesión no válida, inicia sesión de nuevo."}, status=401
-        )
 
     verify = verify_admin(request)
     if verify:
@@ -343,3 +312,29 @@ def create_character(request):
         return JsonResponse(
             {"error": f"Error al crear personaje: {str(e)}"}, status=500
         )
+
+#########################
+## ADMIN ITEMS SECTION ##
+#########################
+
+def admin_items(request):
+    
+    verify = verify_admin(request)
+    if verify:
+        return verify
+    
+    items_docs = db.collection('cafe').stream()
+    items = []
+    
+    for doc in items_docs:
+        item_data = doc.to_dict()
+        item_id = doc.id
+        
+        item_data['id'] = item_id
+        items.append(item_data)
+    
+    return render(request, 'administrator/admin_items.html', {'items':items})
+
+
+
+

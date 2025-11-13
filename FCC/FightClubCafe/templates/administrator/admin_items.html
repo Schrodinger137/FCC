@@ -1,0 +1,24 @@
+{% extends 'adminBase.html' %}
+{% load static %}
+
+{% block title %}Administración de Items{% endblock %}
+
+{% block sidebar %}
+<hr>
+<li class="nav-item"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#createUserModal"><i
+            class="bi bi-plus"></i>Añadir Item</a></li>
+<hr>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <div class="row">
+
+        {% for item in items %}
+        <h5>Hola mundo</h5>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

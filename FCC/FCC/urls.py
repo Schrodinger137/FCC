@@ -42,5 +42,8 @@ urlpatterns = [
     ## CHARACTER SECTION
     path('admin_characters/', views.admin_characters, name='admin_characters'),
     path('create_character/', views.create_character, name='create_character'),
-    path('usuario/', views.form_usuario, name='form_usuario'),
+    
+    ## ITEMS SECTION
+    path('admin_items/', views.admin_items, name='admin_items'),
+    
 ]

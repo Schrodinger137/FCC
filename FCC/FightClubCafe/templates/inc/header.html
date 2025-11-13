@@ -13,6 +13,10 @@
         {% if request.session.usuario_id %}
         <li class="nav-item"><a class="nav-link text-light" href="#" data-bs-toggle="modal"
             data-bs-target="#myAccountModal"><button class="btn btn-light btn-sm">Mi Cuenta</button></a></li>
+        {% if request.session.usuario_rol == 'admin' %}
+        <li class="nav-item"><a class="nav-link text-light" href="{% url 'administrator' %}"><button
+              class="btn btn-orange btn-sm">Ir al Admin</button></a></li>
+        {% endif %}
         <li class="nav-item"><a class="nav-link text-light" href="{% url 'logout' %}"><button
               class="btn btn-danger btn-sm">Cerrar Sesión</button></a></li>
         {% else %}
@@ -21,10 +25,7 @@
         <li class="nav-item"><a class="nav-link text-light" href="{% url 'signin' %}"><button
               class="btn btn-light btn-sm">Crear Cuenta</button></a></li>
         {% endif %}
-        {% if request.session.usuario_rol == 'admin' %}
-        <li class="nav-item"><a class="nav-link text-light" href="{% url 'administrator' %}"><button
-              class="btn btn-orange btn-sm">Ir al Admin</button></a></li>
-        {% endif %}
+
       </ul>
     </div>
   </div>
