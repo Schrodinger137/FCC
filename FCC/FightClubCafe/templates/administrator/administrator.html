@@ -8,8 +8,10 @@
 <style>
     /* 🔧 Ajuste visual para las imágenes de las cards */
     .admin-card-img {
-        height: 180px;                /* Altura fija, ajustable */
-        object-fit: cover;            /* Recorta sin deformar */
+        height: 180px;
+        /* Altura fija, ajustable */
+        object-fit: cover;
+        /* Recorta sin deformar */
         border-top-left-radius: 0.5rem;
         border-top-right-radius: 0.5rem;
     }
@@ -43,7 +45,11 @@
         <!-- Card Personajes -->
         <div class="col-md-4">
             <div class="card bg-dark text-light border-0 shadow-lg h-100">
-                    <img src="{{ personajes_img }}" class="admin-card-img w-100" alt="Personajes">
+                {% if personajes_img %}
+                <img src="{{ personajes_img }}" class="admin-card-img w-100" alt="Personajes">
+                {% else %}
+                <p class="text-danger">No se encontró imagen de ítems</p>
+                {% endif %}
                 <div class="card-body text-center">
                     <h5 class="card-title">Personajes</h5>
                     <p class="card-text text-secondary">Gestiona los personajes disponibles en el sistema.</p>
@@ -55,7 +61,12 @@
         <!-- Card Ítems -->
         <div class="col-md-4">
             <div class="card bg-dark text-light border-0 shadow-lg h-100">
-                    <img src="{{ cafe_img }}" class="admin-card-img w-100" alt="Ítems">
+                {% if cafe_img %}
+                <img src="{{ cafe_img }}" class="admin-card-img w-100" alt="Ítems">
+                {% else %}
+                <p class="text-danger">No se encontró imagen de ítems</p>
+                {% endif %}
+
                 <div class="card-body text-center">
                     <h5 class="card-title">Ítems</h5>
                     <p class="card-text text-secondary">Controla los ítems disponibles y sus propiedades.</p>
@@ -66,5 +77,51 @@
 
     </div>
 </div>
+
+<style>
+    .admin-card-img {
+        height: 180px;
+        object-fit: cover;
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+        transition: transform 0.4s ease, filter 0.4s ease;
+    }
+
+    .card.bg-dark {
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        border: 1px solid #222;
+    }
+
+    .card.bg-dark:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 10px 25px rgba(255, 165, 0, 0.3);
+        border-color: #cb6201;
+    }
+
+    .card.bg-dark:hover .admin-card-img {
+        transform: scale(1.05);
+        filter: brightness(1.2);
+    }
+
+    .card.bg-dark:hover .btn-outline-info {
+        background-color: #0dcaf0;
+        color: #000;
+    }
+
+    .card.bg-dark:hover .btn-outline-success {
+        background-color: #198754;
+        color: #fff;
+    }
+
+    .card.bg-dark:hover .btn-outline-warning {
+        background-color: #ffc107;
+        color: #000;
+    }
+
+    body {
+        background-color: #121212;
+    }
+</style>
+
 
 {% endblock %}

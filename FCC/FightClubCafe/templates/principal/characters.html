@@ -26,4 +26,71 @@
   </div>
 </section>
 
+<style>
+  .card.bg-dark {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border: 1px solid #222;
+    overflow: hidden;
+    border-radius: 0.75rem;
+  }
+
+  .card.bg-dark img {
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.4s ease, filter 0.4s ease;
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+  }
+
+  .card.bg-dark:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 12px 28px rgba(203, 98, 1, 0.4);
+    border-color: #cb6201;
+  }
+
+  .card.bg-dark:hover img {
+    transform: scale(1.08);
+    filter: brightness(1.2) saturate(1.2);
+  }
+
+  .card.bg-dark .btn {
+    background-color: transparent;
+    border: 2px solid #cb6201;
+    color: #cb6201;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+
+  .card.bg-dark .btn:hover {
+    background-color: #cb6201;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(203, 98, 1, 0.7);
+  }
+
+  .card-title {
+    color: #ffb347;
+    font-weight: 600;
+    text-shadow: 0 0 5px rgba(255, 179, 71, 0.5);
+  }
+
+  .card-text {
+    color: #ddd;
+  }
+
+  .card.bg-dark:hover {
+    animation: pulseCard 0.8s ease-in-out;
+  }
+
+  @keyframes pulseCard {
+    0% { transform: scale(1.03); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1.03); }
+  }
+
+  body {
+    background-color: #121212;
+  }
+</style>
+
+
 {% endblock %}
