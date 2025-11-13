@@ -5,28 +5,57 @@
 
 {% block content %}
 
-<section class="container py-5" style="margin-top: 80px;"> 
-  <h2 class="text-center mb-5">Personajes</h2>
+<section class="container py-5" style="margin-top: 80px;">
+  <h2 class="text-center mb-5 text-warning fw-bold">Personajes</h2>
 
   <div class="row g-4">
     {% for personaje in personajes %}
-      <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
-        <div class="card bg-dark text-light h-100 shadow-lg" style="width: 18rem;">
-          <img src="{{ personaje.imagen }}" class="card-img-top" alt="{{ personaje.nombre }}">
-          <div class="card-body">
-            <h5 class="card-title">{{ personaje.nombre }}</h5>
-            <p class="card-text">{{ personaje.descripcion|truncatewords:20 }}</p>
-            <a href="#" data-bs-toggle="modal" data-bs-target="#characterModal" class="btn btn-primary">Ver más</a>
+    <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+      <div class="card bg-dark text-light h-100 shadow-lg" style="width: 18rem;">
+        <img src="{{ personaje.imagen }}" class="card-img-top" alt="{{ personaje.nombre }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ personaje.nombre }}</h5>
+          <p class="card-text">{{ personaje.descripcion|truncatewords:20 }}</p>
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-{{ personaje.id }}">
+            Ver más
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal fade" id="modal-{{ personaje.id }}" tabindex="-1" aria-labelledby="modalLabel-{{ personaje.id }}" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content bg-dark text-light border-0 shadow-lg rounded-4" style="overflow: hidden;">
+          <div class="modal-header border-0 bg-gradient text-warning">
+            <h1 class="modal-title fs-4 fw-bold" id="modalLabel-{{ personaje.id }}">{{ personaje.nombre }}</h1>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+
+          <div class="modal-body d-flex flex-column flex-md-row align-items-stretch">
+            <div class="col-md-5 mb-3 mb-md-0">
+              <img src="{{ personaje.imagen }}" alt="{{ personaje.nombre }}" class="img-fluid rounded-3 w-100 h-100" style="object-fit: cover;">
+            </div>
+
+            <div class="col-md-7 ps-md-4 d-flex flex-column justify-content-center">
+              <p class="text-light-emphasis">{{ personaje.descripcion }}</p>
+            </div>
+          </div>
+
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal">Cerrar</button>
           </div>
         </div>
       </div>
+    </div>
     {% empty %}
-      <p class="text-center">No hay personajes disponibles.</p>
+    <p class="text-center">No hay personajes disponibles.</p>
     {% endfor %}
   </div>
 </section>
 
 <style>
+  /* ======== CARDS ======== */
   .card.bg-dark {
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     border: 1px solid #222;
@@ -82,15 +111,22 @@
   }
 
   @keyframes pulseCard {
-    0% { transform: scale(1.03); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1.03); }
+    0% {
+      transform: scale(1.03);
+    }
+
+    50% {
+      transform: scale(1.05);
+    }
+
+    100% {
+      transform: scale(1.03);
+    }
   }
 
   body {
     background-color: #121212;
   }
 </style>
-
 
 {% endblock %}
