@@ -1,205 +1,225 @@
 .playfair-display {
-    font-family: "Playfair Display", serif;
-    font-optical-sizing: auto;
-    font-weight: 700;
-    font-style: normal;
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
 }
 
 .vt323-regular {
-    font-family: "VT323", monospace;
-    font-weight: 400;
-    font-style: normal;
+  font-family: "VT323", monospace;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .btn-orange {
-    font-family: "Playfair Display", serif;
-    background-color: #cb6201;
-    border-color: #cb6201;
-    color: #fff;
-    font-weight: 600;
-    transition: all 0.3s ease;
+  font-family: "Playfair Display", serif;
+  background-color: #cb6201;
+  border-color: #cb6201;
+  color: #fff;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .btn-orange:hover {
-    background-color: #6c3407;
-    border-color: #6c3407;
+  background-color: #6c3407;
+  border-color: #6c3407;
 }
 
 .navbar-transparent {
-    background-color: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
 }
 
 .carousel-inner img {
-    max-height: 300px; /* ajusta según lo quieras */
-    object-fit: contain; /* mantiene la imagen completa sin recortar */
-    width: auto; /* ancho automático según la proporción */
-    margin: 0 auto; /* centra la imagen horizontalmente */
-    display: block; /* para centrar correctamente */
+  max-height: 300px;
+  /* ajusta según lo quieras */
+  object-fit: contain;
+  /* mantiene la imagen completa sin recortar */
+  width: auto;
+  /* ancho automático según la proporción */
+  margin: 0 auto;
+  /* centra la imagen horizontalmente */
+  display: block;
+  /* para centrar correctamente */
 }
 
 /* Inputs */
 .form-control {
-    background-color: #3e2f2f; /* café oscuro */
-    color: #ffd699; /* texto beige */
-    border-color: #aa5522;
+  background-color: #3e2f2f;
+  /* café oscuro */
+  color: #ffd699;
+  /* texto beige */
+  border-color: #aa5522;
 }
 
 /* Botón crear */
 .btn-primary {
-    background: linear-gradient(135deg, #ff6b35, #ff9f1c, #ffbf69);
-    border: none;
-    color: #2b1b1b;
-    font-weight: bold;
+  background: linear-gradient(135deg, #ff6b35, #ff9f1c, #ffbf69);
+  border: none;
+  color: #2b1b1b;
+  font-weight: bold;
 }
 
 /* Card headers */
 .card-header {
-    background-color: #2b1b1b;
-    border-color: #aa5522;
+  background-color: #2b1b1b;
+  border-color: #aa5522;
 }
 
 /* Carousel caption overlay */
 .carousel-caption {
-    background-color: rgba(255, 127, 80, 0.8); /* naranja cozy semitransparente */
-    color: #2b1b1b;
-    border-radius: 8px;
-    padding: 10px;
+  background-color: rgba(255, 127, 80, 0.8);
+  /* naranja cozy semitransparente */
+  color: #2b1b1b;
+  border-radius: 8px;
+  padding: 10px;
 }
 
 .carousel-item img {
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
 }
 
-    body.admin {
-      background-color: #121212;
-      color: #e0e0e0;
-      font-family: "VT323", monospace;
-      overflow-x: hidden;
-    }
+body.admin {
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: "VT323", monospace;
+  overflow-x: hidden;
+}
 
-    .admin .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 70px; /* compacta */
-      background-color: #101010;
-      box-shadow: 2px 0 8px rgba(0,0,0,0.6);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 80px;
-      transition: width 0.3s ease;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: #444 #1b1b1b;
-      z-index: 1040;
-    }
+.admin .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 70px;
+  /* compacta */
+  background-color: #101010;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 80px;
+  transition: width 0.3s ease;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #444 #1b1b1b;
+  z-index: 1040;
+}
 
-    .admin .sidebar::-webkit-scrollbar {
-      width: 6px;
-    }
-    .admin .sidebar::-webkit-scrollbar-thumb {
-      background-color: #444;
-      border-radius: 10px;
-    }
+.admin .sidebar::-webkit-scrollbar {
+  width: 6px;
+}
 
-    .admin .sidebar:hover {
-      width: 250px;
-    }
+.admin .sidebar::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 10px;
+}
 
-    .admin .sidebar h5 {
-      font-size: 1rem;
-      color: #bbb;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-      white-space: nowrap;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      align-self: flex-start;
-      margin-left: 20px;
-    }
+.admin .sidebar:hover {
+  width: 250px;
+}
 
-    .admin .sidebar:hover h5 {
-      opacity: 1;
-    }
+.admin .sidebar h5 {
+  font-size: 1rem;
+  color: #bbb;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  align-self: flex-start;
+  margin-left: 20px;
+}
 
-    .admin .sidebar .nav {
-      width: 100%;
-    }
+.admin .sidebar:hover h5 {
+  opacity: 1;
+}
 
-    .admin .sidebar .nav-link {
-      color: #aaa;
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 18px;
-      border-radius: 8px;
-      margin: 3px 8px;
-      white-space: nowrap;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
+.admin .sidebar .nav {
+  width: 100%;
+}
 
-    .admin .sidebar .nav-link:hover,
-    .admin .sidebar .nav-link.active {
-      background-color: #cb6201;
-      color: #fff;
-    }
+.admin .sidebar .nav-link {
+  color: #aaa;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  margin: 3px 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
 
-    .admin .sidebar .nav-link i {
-      font-size: 1.4rem;
-      min-width: 30px;
-      text-align: center;
-    }
+.admin .sidebar .nav-link:hover,
+.admin .sidebar .nav-link.active {
+  background-color: #cb6201;
+  color: #fff;
+}
 
-    .admin .sidebar span {
-      opacity: 0;
-      transform: translateX(-10px);
-      transition: all 0.3s ease;
-    }
+.admin .sidebar .nav-link i {
+  font-size: 1.4rem;
+  min-width: 30px;
+  text-align: center;
+}
 
-    .admin .sidebar:hover span {
-      opacity: 1;
-      transform: translateX(0);
-    }
+.admin .sidebar span {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+}
 
-    .admin main {
-      margin-left: 70px;
-      padding: 30px;
-      transition: margin-left 0.3s ease;
-    }
+.admin .sidebar:hover span {
+  opacity: 1;
+  transform: translateX(0);
+}
 
-    .admin .sidebar:hover ~ main {
-      margin-left: 250px;
-    }
+.admin main {
+  margin-left: 70px;
+  padding: 30px;
+  transition: margin-left 0.3s ease;
+}
 
-    @media (max-width: 992px) {
-      .admin .sidebar {
-        width: 0;
-        opacity: 0;
-      }
-      .admin .sidebar.show {
-        width: 220px;
-        opacity: 1;
-      }
-      .admin main {
-        margin-left: 0 !important;
-      }
-    }
+.admin .sidebar:hover~main {
+  margin-left: 250px;
+}
 
-    .toggle-btn {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      z-index: 1050;
-      background: #cb6201;
-      border: none;
-      color: white;
-      border-radius: 5px;
-      padding: 8px 10px;
-      cursor: pointer;
-    }
+@media (max-width: 992px) {
+  .admin .sidebar {
+    width: 0;
+    opacity: 0;
+  }
+
+  .admin .sidebar.show {
+    width: 220px;
+    opacity: 1;
+  }
+
+  .admin main {
+    margin-left: 0 !important;
+  }
+}
+
+.toggle-btn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1050;
+  background: #cb6201;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: "VT323", monospace !important;
+  font-weight: 400;
+  font-style: normal;
+}
