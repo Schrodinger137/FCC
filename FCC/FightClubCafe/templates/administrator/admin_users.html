@@ -5,19 +5,25 @@
 
 {% block sidebar %}
 <hr>
-<li class="nav-item"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#createUserModal"><i
-      class="bi bi-plus"></i>Añadir Usuario</a></li>
+<li class="nav-item">
+  <a class="nav-link" data-bs-toggle="modal" data-bs-target="#createUserModal">
+    <i class="bi bi-plus"></i> Añadir Usuario
+  </a>
+</li>
 <hr>
 {% endblock %}
 
 {% block content %}
 
+<!-- Necesario para CSRF -->
+{% csrf_token %}
+
 <div class="container mt-5 pt-4">
   <div class="row">
     <h4>Buscar Usuarios</h4>
     <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-      <button class="btn btn-outline-light" type="submit">Search</button>
+      <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" />
+      <button class="btn btn-outline-light" type="submit">Buscar</button>
     </form>
     <br>
     <div class="col-md-12">
@@ -25,7 +31,7 @@
       <table class="table table-dark table-bordered table-hover table-striped text-center">
         <thead>
           <tr>
-            <th scope="col">Id</th>
+            <th scope="col">#</th>
             <th scope="col">Nombre</th>
             <th scope="col">Email</th>
             <th scope="col">Personaje</th>
@@ -37,25 +43,28 @@
           {% for usuario in usuarios %}
           <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ usuario.nombre}}</td>
+            <td>{{ usuario.nombre }}</td>
             <td>{{ usuario.correo }}</td>
             <td>
               {% if usuario.personaje %}
-              {{ usuario.personaje.nombre }}
+                {{ usuario.personaje.nombre }}
               {% else %}
-              vacío
+                vacío
               {% endif %}
             </td>
             <td>
               {% if usuario.rol %}
-              {{ usuario.rol }}
+                {{ usuario.rol }}
               {% else %}
-              usuario
+                usuario
               {% endif %}
             </td>
             <td>
               <button class="btn btn-warning btn-sm">Editar</button>
-              <button class="btn btn-danger btn-sm" onclick="eliminarUsuario('{{ usuario.id }}')">
+
+              <button 
+                class="btn btn-danger btn-sm"
+                onclick="eliminarUsuario('{{ usuario.id }}')">
                 <i class="bi bi-trash"></i> Eliminar
               </button>
 
@@ -63,7 +72,7 @@
           </tr>
           {% empty %}
           <tr>
-            <td colspan="3" class="text-center text-muted">No hay usuarios registrados</td>
+            <td colspan="6" class="text-center text-muted">No hay usuarios registrados</td>
           </tr>
           {% endfor %}
         </tbody>
@@ -72,23 +81,53 @@
   </div>
 </div>
 
+
 <script>
+  /* ---------------------------
+     FUNCIÓN getCookie (CORRECTA)
+     --------------------------- */
+  function getCookie(name) {
+    let cookieValue = null;
+
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+
+        if (cookie.startsWith(name + "=")) {
+          cookieValue = cookie.substring(name.length + 1);
+          break;
+        }
+      }
+    }
+
+    return cookieValue;
+  }
+
+  /* ---------------------------
+     FUNCIÓN ELIMINAR USUARIO
+     --------------------------- */
   function eliminarUsuario(usuarioId) {
-    if (!confirm("¿Estás seguro de que deseas eliminar este usuario?")) return;
+    if (!confirm("¿Estás seguro de que deseas eliminar este usuario?")) {
+      return;
+    }
+
+    const csrftoken = getCookie("csrftoken");
 
     fetch("{% url 'delete_users' %}", {
       method: "POST",
       headers: {
-        "X-CSRFToken": "{{ csrf_token }}",
-        "Content-Type": "application/x-www-form-urlencoded",
+        "X-CSRFToken": csrftoken,
+        "Content-Type": "application/x-www-form-urlencoded"
       },
-      body: `usuario_id=${usuarioId}`,
+      body: `usuario_id=${usuarioId}`
     })
       .then(response => response.json())
       .then(data => {
         if (data.mensaje) {
           alert(data.mensaje);
-          location.reload(); // refrescar lista
+          location.reload();
         } else {
           alert(data.error || "Error desconocido");
         }

@@ -103,39 +103,33 @@ def logout(request):
 
 
 def index(request):
-    
+
     docs = db.collection("personajes").stream()
     personajes = [{**doc.to_dict(), "id": doc.id} for doc in docs]
-    
-    context = {
-        'personajes': personajes
-    }
+
+    context = {"personajes": personajes}
 
     return render(request, "principal/index.html", context)
 
 
 def characters(request):
-    
-    docs = db.collection('personajes').stream()
-    personajes = [{**doc.to_dict(), 'id': doc.id} for doc in docs]
-    
-    context = {
-        'personajes':personajes
-    }
-    
-    return render(request, 'principal/characters.html', context)
+
+    docs = db.collection("personajes").stream()
+    personajes = [{**doc.to_dict(), "id": doc.id} for doc in docs]
+
+    context = {"personajes": personajes}
+
+    return render(request, "principal/characters.html", context)
 
 
 def items(request):
-    
-    docs = db.collection('cafe').stream()
-    items = [{**doc.to_dict(), 'id':doc.id} for doc in docs]
-    
-    context = {
-        'items':items
-    }
-    
-    return render(request, 'principal/items.html', context)
+
+    docs = db.collection("cafe").stream()
+    items = [{**doc.to_dict(), "id": doc.id} for doc in docs]
+
+    context = {"items": items}
+
+    return render(request, "principal/items.html", context)
 
 
 def account(request):
@@ -174,7 +168,6 @@ def administrator(request):
     return render(request, "administrator/administrator.html", context)
 
 
-
 #########################
 ## ADMIN USERS SECTION ##
 #########################
@@ -186,34 +179,21 @@ def admin_users(request):
     if verify:
         return verify
 
-    docs = db.collection("usuarios").stream()
-    usuarios = [{**doc.to_dict(), "id": doc.id} for doc in docs]
-
-    personajes_docs = db.collection("personajes").stream()
-    personajes_dict = {doc.id: doc.to_dict().get('nombre', 'Desconocido') for doc in personajes_docs}
-
-    for usuario in usuarios:
-        personaje_id = usuario.get('personaje_id')
-        if personaje_id:
-            usuario['personaje'] = personajes_dict.get(personaje_id, 'No encontrado')
-        else:
-            usuario['personaje'] = 'Sin personaje'
-
-    usuarios_docs = db.collection("usuarios").stream()
     usuarios = []
+    usuarios_docs = db.collection("usuarios").stream()
 
     for doc in usuarios_docs:
         usuario = doc.to_dict()
         usuario["id"] = doc.id
+        if usuario.get("eliminado"):
+            continue
 
         personaje_id = usuario.get("personaje_id")
         if personaje_id:
-            personaje_ref = db.collection("personajes").document(personaje_id)
-            personaje_doc = personaje_ref.get()
-            if personaje_doc.exists:
-                usuario["personaje"] = personaje_doc.to_dict()
-            else:
-                usuario["personaje"] = None
+            personaje_doc = db.collection("personajes").document(personaje_id).get()
+            usuario["personaje"] = (
+                personaje_doc.to_dict() if personaje_doc.exists else None
+            )
         else:
             usuario["personaje"] = None
 
@@ -224,27 +204,23 @@ def admin_users(request):
 
 def delete_users(request):
 
-    verify = verify_admin(request)
-    if verify:
-        return JsonResponse({"error": "No tienes permisos para eliminar usuarios"}, status=403)
+    # Nunca redirigir en un fetch()
+    if request.session.get("usuario_rol") not in ["admin", "Admin"]:
+        return JsonResponse({"error": "No autorizado"}, status=403)
+
+    if request.method != "POST":
+        return JsonResponse({"error": "Método no permitido"}, status=405)
 
     usuario_id = request.POST.get("usuario_id")
 
-    if not usuario_id:
-        return JsonResponse({"error": "No se proporcionó el ID del usuario"}, status=400)
-
     try:
         usuario_ref = db.collection("usuarios").document(usuario_id)
-        usuario_doc = usuario_ref.get()
+        usuario_ref.update({"eliminado": True})
 
-        if not usuario_doc.exists:
-            return JsonResponse({"error": "Usuario no encontrado"}, status=404)
-
-        usuario_ref.delete()
-
-        return JsonResponse({"mensaje": "Usuario eliminado correctamente"})
+        return JsonResponse({"mensaje": "Usuario marcado como eliminado"})
     except Exception as e:
-        return JsonResponse({"error": f"Error al eliminar usuario: {str(e)}"}, status=500)
+        return JsonResponse({"error": str(e)}, status=500)
+
 
 
 ###############################
@@ -280,7 +256,8 @@ def admin_characters(request):
     return render(
         request, "administrator/admin_character.html", {"personajes": personajes}
     )
-    
+
+
 def create_character(request):
 
     verify = verify_admin(request)
@@ -331,28 +308,26 @@ def create_character(request):
             {"error": f"Error al crear personaje: {str(e)}"}, status=500
         )
 
+
 #########################
 ## ADMIN ITEMS SECTION ##
 #########################
 
+
 def admin_items(request):
-    
+
     verify = verify_admin(request)
     if verify:
         return verify
-    
-    items_docs = db.collection('cafe').stream()
+
+    items_docs = db.collection("cafe").stream()
     items = []
-    
+
     for doc in items_docs:
         item_data = doc.to_dict()
         item_id = doc.id
-        
-        item_data['id'] = item_id
+
+        item_data["id"] = item_id
         items.append(item_data)
-    
-    return render(request, 'administrator/admin_items.html', {'items':items})
 
-
-
-
+    return render(request, "administrator/admin_items.html", {"items": items})
