@@ -148,11 +148,17 @@ def administrator(request):
     if verify:
         return verify
 
-    personajes_docs = list(db.collection("personajes").limit(1).stream())
-    personajes_img = None
+    personajes_docs = list(db.collection("personajes").limit(2).stream())
+    personajes_img_1 = None
+    personajes_img_2 = None
+
     if personajes_docs:
-        personaje = personajes_docs[0].to_dict()
-        personajes_img = personaje.get("imagen")
+        personaje1 = personajes_docs[0].to_dict()
+        personajes_img_1 = personaje1.get("imagen")
+
+        if len(personajes_docs) > 1:
+            personaje2 = personajes_docs[1].to_dict()
+            personajes_img_2 = personaje2.get("imagen")
 
     cafe_docs = list(db.collection("cafe").limit(1).stream())
     cafe_img = None
@@ -161,7 +167,8 @@ def administrator(request):
         cafe_img = item.get("imagen")
 
     context = {
-        "personajes_img": personajes_img,
+        "personajes_img": personajes_img_1,
+        "personajes_img_2": personajes_img_2,   # ← NUEVA
         "cafe_img": cafe_img,
     }
 

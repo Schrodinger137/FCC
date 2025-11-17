@@ -31,16 +31,24 @@
     <div class="row justify-content-center g-4">
 
         <!-- Card Usuarios -->
+        <!-- Card Usuarios -->
         <div class="col-md-4">
             <div class="card bg-dark text-light border-0 shadow-lg h-100">
+
+                {% if personajes_img_2 %}
+                <img src="{{ personajes_img_2 }}" class="admin-card-img w-100" alt="Usuarios">
+                {% else %}
+                <p class="text-danger">Sin imagen disponible</p>
+                {% endif %}
+
                 <div class="card-body text-center">
-                    <i class="bi bi-people-fill display-4 text-info mb-3"></i>
                     <h5 class="card-title">Usuarios</h5>
                     <p class="card-text text-secondary">Administra los usuarios registrados y sus permisos.</p>
                     <a href="{% url 'admin_users' %}" class="btn btn-outline-info mt-2">Ir a Usuarios</a>
                 </div>
             </div>
         </div>
+
 
         <!-- Card Personajes -->
         <div class="col-md-4">
