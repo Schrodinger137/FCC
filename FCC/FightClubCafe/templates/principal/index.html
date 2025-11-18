@@ -6,188 +6,272 @@
 {% block content %}
 
 <style>
-/* 🕶️ Estilos globales */
-body {
-  background-color: #0c0b09;
-  color: #f5f5f5;
-  font-family: 'Playfair Display', serif;
-  overflow-x: hidden;
-}
-
-/* ☕ HERO SECTION */
-.hero-section {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(20, 10, 0, 0.8)),
-    url("https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=2000");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  height: 90vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: #fff;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-section::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, rgba(255, 150, 0, 0.1), transparent 70%);
-  z-index: 0;
-}
-
-.hero-section h1 {
-  font-size: 4rem;
-  font-weight: 800;
-  color: #ffb347;
-  text-shadow: 0 0 15px rgba(255, 140, 0, 0.8);
-  z-index: 1;
-}
-
-.hero-section p {
-  max-width: 900px;
-  margin: 20px auto;
-  font-size: 1.1rem;
-  color: #f0e6d2;
-  line-height: 1.7;
-  z-index: 1;
-}
-
-.hero-section .btn-orange {
-  background: linear-gradient(90deg, #cb6201, #ff9f1c);
-  border: none;
-  color: #fff;
-  font-weight: 600;
-  padding: 10px 25px;
-  border-radius: 50px;
-  transition: all 0.3s ease;
-  z-index: 2;
-}
-
-.hero-section .btn-orange:hover {
-  background: #ffb347;
-  color: #000;
-  box-shadow: 0 0 25px rgba(255, 160, 0, 0.8);
-  transform: scale(1.08);
-}
-
-/* 🔥 CAROUSEL */
-.carousel-section {
-  position: relative;
-  background: linear-gradient(180deg, #1a0f05, #0d0c0a);
-  padding: 80px 0;
-  border-top: 2px solid rgba(255, 140, 0, 0.3);
-  border-bottom: 2px solid rgba(255, 140, 0, 0.3);
-  overflow: hidden;
-}
-
-.carousel-item img {
-  max-height: 500px;
-  object-fit: cover;
-  filter: brightness(0.75) contrast(1.1);
-  transition: transform 0.8s ease, filter 0.6s ease;
-}
-
-.carousel-item:hover img {
-  transform: scale(1.05);
-  filter: brightness(0.95);
-}
-
-.carousel-caption {
-  background: rgba(20, 10, 0, 0.7);
-  border: 1px solid rgba(255, 140, 0, 0.3);
-  border-radius: 12px;
-  padding: 15px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 0 10px rgba(255, 150, 0, 0.3);
-}
-
-.carousel-caption h5 {
-  font-size: 1.8rem;
-  color: #ffb347;
-  font-weight: bold;
-  text-shadow: 0 0 8px rgba(255, 150, 0, 0.7);
-}
-
-.carousel-caption p {
-  font-size: 1rem;
-  color: #e5d3b3;
-}
-
-/* Flechas del carrusel */
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  filter: invert(80%) sepia(60%) saturate(400%) hue-rotate(10deg);
-}
-
-.carousel-control-prev:hover span,
-.carousel-control-next:hover span {
-  transform: scale(1.2);
-}
-
-/* ✨ Animación de entrada suave */
-.fade-in {
-  animation: fadeIn 1.5s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+  body {
+    background-color: #0c0b09;
+    color: #f5f5f5;
+    font-family: 'Playfair Display', serif;
+    overflow-x: hidden;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .hero-section {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(20, 10, 0, 0.8)),
+      url("https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=2000");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
   }
-}
+
+  .hero-section::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255, 150, 0, 0.1), transparent 70%);
+    z-index: 0;
+  }
+
+  .hero-section h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    color: #ffb347;
+    text-shadow: 0 0 15px rgba(255, 140, 0, 0.8);
+    z-index: 1;
+  }
+
+  .hero-section p {
+    max-width: 900px;
+    margin: 20px auto;
+    font-size: 1.1rem;
+    color: #f0e6d2;
+    line-height: 1.7;
+    z-index: 1;
+  }
+
+  .hero-section .btn-orange {
+    background: linear-gradient(90deg, #cb6201, #ff9f1c);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 25px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    z-index: 2;
+  }
+
+  .hero-section .btn-orange:hover {
+    background: #ffb347;
+    color: #000;
+    box-shadow: 0 0 25px rgba(255, 160, 0, 0.8);
+    transform: scale(1.08);
+  }
+
+  .carousel-section {
+    position: relative;
+    background: linear-gradient(180deg, #1a0f05, #0d0c0a);
+    padding: 80px 0;
+    border-top: 2px solid rgba(255, 140, 0, 0.3);
+    border-bottom: 2px solid rgba(255, 140, 0, 0.3);
+    overflow: hidden;
+  }
+
+  .carousel-item img {
+    max-height: 500px;
+    object-fit: cover;
+    filter: brightness(0.75) contrast(1.1);
+    transition: transform 0.8s ease, filter 0.6s ease;
+  }
+
+  .carousel-item:hover img {
+    transform: scale(1.05);
+    filter: brightness(0.95);
+  }
+
+  .carousel-caption {
+    background: rgba(20, 10, 0, 0.7);
+    border: 1px solid rgba(255, 140, 0, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 10px rgba(255, 150, 0, 0.3);
+  }
+
+  .carousel-caption h5 {
+    font-size: 1.8rem;
+    color: #ffb347;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(255, 150, 0, 0.7);
+  }
+
+  .carousel-caption p {
+    font-size: 1rem;
+    color: #e5d3b3;
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    filter: invert(80%) sepia(60%) saturate(400%) hue-rotate(10deg);
+  }
+
+  .carousel-control-prev:hover span,
+  .carousel-control-next:hover span {
+    transform: scale(1.2);
+  }
+
+  .fade-in {
+    animation: fadeIn 1.5s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* CONTENEDOR DE TODA LA BARAJA */
+  .deck-container {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    height: 450px;
+    margin-top: 50px;
+
+    /* ❤️ CENTRAR TODA LA BARAJA */
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* TARJETA INDIVIDUAL */
+  .deck-card {
+    position: relative;
+    width: 350px;
+    height: 450px;
+    background: #1a1a1a;
+    border: 3px solid #cb6201;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, z-index 0.3s ease;
+
+    /* ENCIMADO HORIZONTAL */
+    margin-left: -250px;
+  }
+
+  /* 👉 Necesario: la primera carta no debe tener margen negativo */
+  .deck-card:first-child {
+    margin-left: 0;
+  }
+
+  /* Hover */
+  .deck-card:hover {
+    transform: scale(1.22) translateY(-25px);
+    z-index: 99;
+  }
+
+  /* Imagen */
+  .deck-card img {
+    width: 100%;
+    height: 55%;
+    object-fit: cover;
+  }
+
+  /* Contenedor del texto */
+  .deck-info {
+    padding: 15px;
+    font-size: 1rem;
+    height: 45%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+
+  .deck-info::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .deck-info::-webkit-scrollbar-thumb {
+    background: #cb6201;
+    border-radius: 10px;
+  }
+
+  .deck-info::-webkit-scrollbar-track {
+    background: #1a1a1a;
+  }
+
+  .deck-info h3 {
+    color: #ffb347;
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+  }
 </style>
 
-<!-- 🧨 HERO / PRESENTACIÓN -->
 <section class="hero-section text-center text-light fade-in">
   <div class="container px-4">
     <h1 class="playfair-display mb-4">☕ Fight Club Café 💀</h1>
     <p>
       Un lugar donde las sombras del combate se mezclan con el aroma del café.
       Aquí, los guerreros descansan, los héroes conspiran y cada sorbo
-      cuenta una historia.  
+      cuenta una historia.
     </p>
     <button type="button" class="btn btn-orange mt-3">Ver más</button>
   </div>
 </section>
 
-<!-- 🌀 CAROUSEL DE PERSONAJES -->
-<section class="carousel-section fade-in">
-  <div class="container">
-    <div id="carouselPersonajes" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        {% for personaje in personajes %}
-        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-          <img src="{{ personaje.imagen }}" class="d-block w-100 rounded" alt="{{ personaje.nombre }}">
-          <div class="carousel-caption">
-            <h5>{{ personaje.nombre }}</h5>
-            <p>{{ personaje.descripcion|truncatewords:25 }}</p>
-          </div>
-        </div>
-        {% empty %}
-        <div class="text-center text-light py-5">
-          <p>No hay personajes disponibles.</p>
-        </div>
-        {% endfor %}
+<section class="text-center" style="align-items: center;">
+  <br>
+  <h1 class="text-center">Personajes</h1>
+  <div class="deck-container mt-5">
+    {% for personaje in personajes %}
+    <div class="deck-card">
+      <img src="{{ personaje.imagen }}" alt="{{ personaje.nombre }}">
+      <div class="deck-info">
+        <h3>{{ personaje.nombre }}</h3>
+        <p><strong>Descripción:</strong> {{ personaje.descripcion }}</p>
+        <p><strong>Daño:</strong> {{ personaje.dano }}</p>
+        <p><strong>Velocidad:</strong> {{ personaje.velocidad }}</p>
       </div>
-
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselPersonajes" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Anterior</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselPersonajes" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Siguiente</span>
-      </button>
     </div>
+    {% endfor %}
   </div>
+  <br>
 </section>
+
+<section class="text-center" style="align-items: center;">
+  <br>
+  <h1 class="text-center">Items</h1>
+  <div class="deck-container mt-5">
+    {% for item in items %}
+    <div class="deck-card">
+      <img src="{{ item.imagen }}" alt="{{ item.nombre }}">
+      <div class="deck-info">
+        <h3>{{ item.nombre }}</h3>
+        <p><strong>Duración:</strong> {{ item.duracion }}</p>
+        <p><strong>Daño:</strong> {{ item.aumentoDano }}</p>
+        <p><strong>Velocidad:</strong> {{ item.aumentoVelocidad }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <br>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".stack-card").forEach((card, index) => {
+      card.style.setProperty("--i", index);
+    });
+  });
+</script>
 
 {% endblock %}

@@ -106,8 +106,14 @@ def index(request):
 
     docs = db.collection("personajes").stream()
     personajes = [{**doc.to_dict(), "id": doc.id} for doc in docs]
+    
+    docs = db.collection('cafe').stream()
+    items = [{**doc.to_dict(), "id": doc.id} for doc in docs]
 
-    context = {"personajes": personajes}
+    context = {
+        "personajes": personajes,
+        'items':items,
+        }
 
     return render(request, "principal/index.html", context)
 
@@ -116,7 +122,6 @@ def characters(request):
 
     docs = db.collection("personajes").stream()
     personajes = [{**doc.to_dict(), "id": doc.id} for doc in docs]
-    
     
     docs = db.collection("cafe").stream()
     items = [{**doc.to_dict(), "id": doc.id} for doc in docs]

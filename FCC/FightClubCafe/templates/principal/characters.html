@@ -81,15 +81,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const aumentoDano = parseInt(btn.dataset.dano);
       const aumentoVelocidad = parseInt(btn.dataset.velocidad);
-
-      // Modal correspondiente
       const modal = btn.closest(".modal");
-
-      // Tags de stats
       const danoTag = modal.querySelector(".stat-dano");
       const velTag = modal.querySelector(".stat-velocidad");
 
-      // Guardar valores base de forma segura
       if (!danoTag.dataset.base) {
         danoTag.dataset.base = danoTag.textContent.trim();
       }
@@ -99,11 +94,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const danoBase = parseInt(danoTag.dataset.base);
       const velBase = parseInt(velTag.dataset.base);
-
       const totalDano = danoBase + aumentoDano;
       const totalVel = velBase + aumentoVelocidad;
 
-      // Reemplazar contenido con detalle completo
       danoTag.innerHTML = `
         ${danoBase}
         <span style="color:#00ff00;">(+${aumentoDano})</span>
@@ -121,20 +114,17 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 <style>
-  /* Contenedor horizontal */
   .items-scroll {
     overflow-x: auto;
     white-space: nowrap;
     padding-bottom: 10px;
   }
 
-  /* Cada item */
   .item-card {
     display: inline-block;
     width: 80px;
   }
 
-  /* Imagen */
   .item-img {
     width: 60px;
     height: 60px;
@@ -143,7 +133,6 @@ document.addEventListener("DOMContentLoaded", () => {
     flex-shrink: 0;
   }
 
-  /* Scroll bonito */
   .items-scroll::-webkit-scrollbar {
     height: 6px;
   }
