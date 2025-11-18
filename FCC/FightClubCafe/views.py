@@ -109,10 +109,14 @@ def index(request):
     
     docs = db.collection('cafe').stream()
     items = [{**doc.to_dict(), "id": doc.id} for doc in docs]
+    
+    usuarios_docs = db.collection("usuarios").stream()
+    usuarios_count = sum(1 for _ in usuarios_docs)
 
     context = {
         "personajes": personajes,
         'items':items,
+        'usuarios_count':usuarios_count,
         }
 
     return render(request, "principal/index.html", context)
@@ -185,7 +189,7 @@ def administrator(request):
 
     context = {
         "personajes_img": personajes_img_1,
-        "personajes_img_2": personajes_img_2,   # ← NUEVA
+        "personajes_img_2": personajes_img_2,
         "cafe_img": cafe_img,
     }
 
