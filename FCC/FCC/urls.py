@@ -25,6 +25,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('characters/', views.characters, name='characters'),
     path('items/', views.items, name='items'),
+    path('chat/', views.chat, name='chat'),
     
     ##SESSION SECTION
     path('signin/', views.signin, name='signin'),

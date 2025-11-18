@@ -144,6 +144,11 @@ def items(request):
     return render(request, "principal/items.html", context)
 
 
+def chat(request):
+    
+    return render(request, 'principal/chat.html')
+
+
 def account(request):
     redireccion = verify_session(request)
     if redireccion:
