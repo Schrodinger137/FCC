@@ -4,27 +4,64 @@
 {% block title %}Fight Club Cafe{% endblock %}
 
 {% block content %}
-<section class="container py-5" style="margin-top: 80px;"> 
+<section class="container py-5" style="margin-top: 80px;">
   <h2 class="text-center mb-5">Items</h2>
 
   <div class="row g-4">
     {% for item in items %}
-      <div class="col-12 col-md-6 d-flex justify-content-center">
-        <div class="card bg-dark text-light shadow-lg d-flex flex-row align-items-center" style="max-width: 540px;">
-          <img src="{{ item.imagen }}" class="img-fluid rounded-start" alt="{{ item.nombre }}" 
-               style="width: 50%; height: 100%; object-fit: cover;">
-          
-          <div class="card-body">
-            <h5 class="card-title mb-3">{{ item.nombre }}</h5>
-            <p class="card-text mb-1"><strong>Daño:</strong> {{ item.aumentoDano }}</p>
-            <p class="card-text mb-1"><strong>Velocidad:</strong> {{ item.aumentoVelocidad }}</p>
-            <p class="card-text mb-2"><strong>Duración:</strong> {{ item.duracion }}</p>
-            <a href="#" class="btn btn-primary btn-sm mt-2">Ver más</a>
+    <div class="col-12 col-md-6 d-flex justify-content-center">
+      <div class="card bg-dark text-light shadow-lg d-flex flex-row align-items-center" style="max-width: 540px;">
+        <img src="{{ item.imagen }}" class="img-fluid rounded-start" alt="{{ item.nombre }}"
+          style="width: 50%; height: 100%; object-fit: cover;">
+
+        <div class="card-body">
+          <h5 class="card-title mb-3">{{ item.nombre }}</h5>
+          <p class="card-text mb-1"><strong>Daño:</strong> {{ item.aumentoDano }}</p>
+          <p class="card-text mb-1"><strong>Velocidad:</strong> {{ item.aumentoVelocidad }}</p>
+          <p class="card-text mb-2"><strong>Duración:</strong> {{ item.duracion }}</p>
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-{{ item.id }}">Ver
+            más</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modal-{{ item.id }}" tabindex="-1" aria-labelledby="modalLabel-{{ item.id }}"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content bg-dark text-light border-0 shadow-lg rounded-4" style="overflow: hidden;">
+          <div class="modal-header border-0 bg-gradient text-warning">
+            <h1 class="modal-title fs-4 fw-bold" id="modalLabel-{{ item.id }}">{{ item.nombre }}</h1>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+              aria-label="Cerrar"></button>
+          </div>
+
+          <div class="modal-body d-flex flex-column flex-md-row align-items-stretch">
+            <div class="col-md-5 mb-3 mb-md-0">
+              <img src="{{ item.imagen }}" alt="{{ item.nombre }}" class="img-fluid rounded-3 w-100 h-100"
+                style="object-fit: cover;">
+            </div>
+
+            <div class="col-md-7 ps-md-4 d-flex flex-column justify-content-center">
+              <h4>Duración</h4>
+              <h5>{{ item.duracion }}</h5>
+              <hr>
+              <h4>Daño</h4>
+              <h5 class="stat-dano">{{ item.aumentoDano }}</h5>
+              <hr>
+              <h4>Velocidad</h4>
+              <h5 class="stat-velocidad">{{ item.aumentoVelocidad }}</h5>
+              <hr>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal">Cerrar</button>
           </div>
         </div>
       </div>
+    </div>
+
     {% empty %}
-      <p class="text-center">No hay items disponibles.</p>
+    <p class="text-center">No hay items disponibles.</p>
     {% endfor %}
   </div>
 </section>
@@ -85,9 +122,17 @@
   }
 
   @keyframes pulseCard {
-    0% { transform: scale(1.03); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1.03); }
+    0% {
+      transform: scale(1.03);
+    }
+
+    50% {
+      transform: scale(1.05);
+    }
+
+    100% {
+      transform: scale(1.03);
+    }
   }
 
   body {
