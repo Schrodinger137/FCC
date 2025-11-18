@@ -28,6 +28,8 @@
             <th scope="col">Id</th>
             <th scope="col">Nombre</th>
             <th scope="col">Descripción</th>
+            <th scope="col">Daño</th>
+            <th scope="col">Velocidad</th>
             <th scope="col">Foto</th>
             <th scope="col">Jugadores Asociados</th>
             <th scope="col">Acciones</th>
@@ -39,6 +41,8 @@
             <td>{{ forloop.counter }}</td>
             <td>{{ personaje.nombre }}</td>
             <td>{{ personaje.descripcion }}</td>
+            <td>{{ personaje.dano }}</td>
+            <td>{{ personaje.velocidad }}</td>
             <td>
               <img src="{{ personaje.imagen }}" alt="{{ personaje.nombre }}" class="img-fluid rounded"
                 style="max-width: 80px; max-height: 80px; object-fit: cover;">

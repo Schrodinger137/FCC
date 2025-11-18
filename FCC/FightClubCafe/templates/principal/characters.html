@@ -7,7 +7,6 @@
 
 <section class="container py-5" style="margin-top: 80px;">
   <h2 class="text-center mb-5 text-warning fw-bold">Personajes</h2>
-
   <div class="row g-4">
     {% for personaje in personajes %}
     <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
@@ -23,25 +22,46 @@
       </div>
     </div>
 
-    <!-- MODAL -->
-    <div class="modal fade" id="modal-{{ personaje.id }}" tabindex="-1" aria-labelledby="modalLabel-{{ personaje.id }}" aria-hidden="true">
+    <div class="modal fade" id="modal-{{ personaje.id }}" tabindex="-1" aria-labelledby="modalLabel-{{ personaje.id }}"
+      aria-hidden="true">
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content bg-dark text-light border-0 shadow-lg rounded-4" style="overflow: hidden;">
           <div class="modal-header border-0 bg-gradient text-warning">
             <h1 class="modal-title fs-4 fw-bold" id="modalLabel-{{ personaje.id }}">{{ personaje.nombre }}</h1>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+              aria-label="Cerrar"></button>
           </div>
 
           <div class="modal-body d-flex flex-column flex-md-row align-items-stretch">
             <div class="col-md-5 mb-3 mb-md-0">
-              <img src="{{ personaje.imagen }}" alt="{{ personaje.nombre }}" class="img-fluid rounded-3 w-100 h-100" style="object-fit: cover;">
+              <img src="{{ personaje.imagen }}" alt="{{ personaje.nombre }}" class="img-fluid rounded-3 w-100 h-100"
+                style="object-fit: cover;">
             </div>
 
             <div class="col-md-7 ps-md-4 d-flex flex-column justify-content-center">
-              <p class="text-light-emphasis">{{ personaje.descripcion }}</p>
+              <h4>Descripción</h4>
+              <h5>{{ personaje.descripcion }}</h5>
+              <hr>
+              <h4>Daño</h4>
+              <h5 class="stat-dano">{{ personaje.dano }}</h5>
+              <hr>
+              <h4>Velocidad</h4>
+              <h5 class="stat-velocidad">{{ personaje.velocidad }}</h5>
+              <hr>
+              <h4>Items disponibles</h4>
+              <div class="items-scroll d-flex gap-3">
+                {% for item in items %}
+                <button class="item-card text-center btn btn-sm btn-outline-warning" data-nombre="{{ item.nombre }}"
+                  data-dano="{{ item.aumentoDano }}" data-velocidad="{{ item.aumentoVelocidad }}"
+                  data-duracion="{{ item.duracion }}">
+
+                  <img src="{{ item.imagen }}" alt="{{ item.nombre }}" class="item-img mb-1">
+                  <p class="text-light small fw-bold m-0">{{ item.nombre }}</p>
+                </button>
+                {% endfor %}
+              </div>
             </div>
           </div>
-
           <div class="modal-footer border-0">
             <button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal">Cerrar</button>
           </div>
@@ -54,8 +74,85 @@
   </div>
 </section>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".item-card").forEach(btn => {
+    btn.addEventListener("click", () => {
+
+      const aumentoDano = parseInt(btn.dataset.dano);
+      const aumentoVelocidad = parseInt(btn.dataset.velocidad);
+
+      // Modal correspondiente
+      const modal = btn.closest(".modal");
+
+      // Tags de stats
+      const danoTag = modal.querySelector(".stat-dano");
+      const velTag = modal.querySelector(".stat-velocidad");
+
+      // Guardar valores base de forma segura
+      if (!danoTag.dataset.base) {
+        danoTag.dataset.base = danoTag.textContent.trim();
+      }
+      if (!velTag.dataset.base) {
+        velTag.dataset.base = velTag.textContent.trim();
+      }
+
+      const danoBase = parseInt(danoTag.dataset.base);
+      const velBase = parseInt(velTag.dataset.base);
+
+      const totalDano = danoBase + aumentoDano;
+      const totalVel = velBase + aumentoVelocidad;
+
+      // Reemplazar contenido con detalle completo
+      danoTag.innerHTML = `
+        ${danoBase}
+        <span style="color:#00ff00;">(+${aumentoDano})</span>
+        <span style="color:#ffb347;">= ${totalDano}</span>
+      `;
+
+      velTag.innerHTML = `
+        ${velBase}
+        <span style="color:#00ff00;">(+${aumentoVelocidad})</span>
+        <span style="color:#ffb347;">= ${totalVel}</span>
+      `;
+    });
+  });
+});
+</script>
+
 <style>
-  /* ======== CARDS ======== */
+  /* Contenedor horizontal */
+  .items-scroll {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 10px;
+  }
+
+  /* Cada item */
+  .item-card {
+    display: inline-block;
+    width: 80px;
+  }
+
+  /* Imagen */
+  .item-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+
+  /* Scroll bonito */
+  .items-scroll::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .items-scroll::-webkit-scrollbar-thumb {
+    background: #cb6201;
+    border-radius: 10px;
+  }
+
   .card.bg-dark {
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     border: 1px solid #222;
