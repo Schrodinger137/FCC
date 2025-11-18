@@ -10,6 +10,8 @@
         <li class="nav-item"><a class="nav-link active text-light" href="{% url 'index' %}">Inicio</a></li>
         <li class="nav-item"><a class="nav-link text-light" href="{% url 'characters' %}">Personajes</a></li>
         <li class="nav-item"><a class="nav-link text-light" href="{% url 'items' %}">Items</a></li>
+        <li class="nav-item"><a class="nav-link text-light" href="#"><button
+              class="btn btn-orange btn-sm">Descargar App</button></a></li>
         <!--<li class="nav-item"><a class="nav-link text-light" href="{% url 'chat' %}">Foro</a></li>-->
         {% if request.session.usuario_id %}
         <li class="nav-item"><a class="nav-link text-light" href="#" data-bs-toggle="modal"
