@@ -205,6 +205,9 @@ def admin_users(request):
 
     usuarios = []
     usuarios_docs = db.collection("usuarios").stream()
+    
+    docs = db.collection("personajes").stream()
+    personajes = [{**doc.to_dict(), "id": doc.id} for doc in docs]
 
     for doc in usuarios_docs:
         usuario = doc.to_dict()
@@ -223,7 +226,12 @@ def admin_users(request):
 
         usuarios.append(usuario)
 
-    return render(request, "administrator/admin_users.html", {"usuarios": usuarios})
+    context = {
+        "usuarios": usuarios,
+        'personajes':personajes,
+        }
+
+    return render(request, "administrator/admin_users.html", context)
 
 
 def delete_users(request):
@@ -280,6 +288,39 @@ def admin_characters(request):
     return render(
         request, "administrator/admin_character.html", {"personajes": personajes}
     )
+
+
+def create_user(request):
+
+    # Proteger endpoint
+    if request.session.get("usuario_rol") not in ["admin", "Admin"]:
+        return JsonResponse({"error": "No autorizado"}, status=403)
+
+    if request.method != "POST":
+        return JsonResponse({"error": "Método no permitido"}, status=405)
+
+    nombre = request.POST.get("nombre")
+    correo = request.POST.get("correo")
+    password = request.POST.get("password")
+    personaje_id = request.POST.get("personaje_id")
+
+    if not nombre or not correo or not password:
+        return JsonResponse({"error": "Todos los campos son obligatorios"}, status=400)
+
+    try:
+        nuevo = db.collection("usuarios").add({
+            "nombre": nombre,
+            "correo": correo,
+            "contraseña": password,
+            "personaje_id": personaje_id,
+            "rol": "usuario",
+            "eliminado": False,
+        })
+
+        return JsonResponse({"mensaje": "Usuario creado correctamente"})
+    
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
 
 
 def create_character(request):

@@ -38,6 +38,7 @@ urlpatterns = [
     
     ##USERS SECTION
     path('admin_users/', views.admin_users, name='admin_users'),
+    path('admin/users/create/', views.create_user, name='create_user'),
     path("admin/users/delete/", views.delete_users, name="delete_users"),
     
     ## CHARACTER SECTION
