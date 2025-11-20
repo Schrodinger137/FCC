@@ -13,9 +13,45 @@
     overflow-x: hidden;
   }
 
-  .hero-section {
+  /* ==============================
+      CONTENEDOR DUAL (UNO Y UNO)
+     ============================== */
+  .dual-section {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px 0;
+  }
+
+  .dual-section.reverse {
+    flex-direction: row-reverse;
+  }
+
+  .dual-section>.half {
+    width: 50%;
+  }
+
+  @media(max-width: 900px) {
+
+    .dual-section,
+    .dual-section.reverse {
+      flex-direction: column;
+    }
+
+    .dual-section>.half {
+      width: 100%;
+    }
+  }
+
+
+  /* ==============================
+       HERO FULL PANTALLA (solo el primero)
+     ============================== */
+  .hero-fullscreen {
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(20, 10, 0, 0.8)),
-      url("{% static 'img/index.png' %}");
+    url("{% static 'img/index.png' %}");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -24,12 +60,11 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: #fff;
     position: relative;
-    overflow: hidden;
+    color: #fff;
   }
 
-  .hero-section::after {
+  .hero-fullscreen::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -37,123 +72,42 @@
     z-index: 0;
   }
 
-  .hero-section h1 {
-    font-size: 4rem;
-    font-weight: 800;
-    color: #ffb347;
-    text-shadow: 0 0 15px rgba(255, 140, 0, 0.8);
-    z-index: 1;
-  }
+  /* ==============================
+       HERO LATERAL (mini hero)
+     ============================== */
+  .hero-side {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(20, 10, 0, 0.85)),
+    url("{% static 'img/index.png' %}");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 
-  .hero-section p {
-    max-width: 900px;
-    margin: 20px auto;
-    font-size: 1.1rem;
-    color: #f0e6d2;
-    line-height: 1.7;
-    z-index: 1;
-  }
-
-  .hero-section .btn-orange {
-    background: linear-gradient(90deg, #cb6201, #ff9f1c);
-    border: none;
-    color: #fff;
-    font-weight: 600;
-    padding: 10px 25px;
-    border-radius: 50px;
-    transition: all 0.3s ease;
-    z-index: 2;
-  }
-
-  .hero-section .btn-orange:hover {
-    background: #ffb347;
-    color: #000;
-    box-shadow: 0 0 25px rgba(255, 160, 0, 0.8);
-    transform: scale(1.08);
-  }
-
-  .carousel-section {
-    position: relative;
-    background: linear-gradient(180deg, #1a0f05, #0d0c0a);
-    padding: 80px 0;
-    border-top: 2px solid rgba(255, 140, 0, 0.3);
-    border-bottom: 2px solid rgba(255, 140, 0, 0.3);
-    overflow: hidden;
-  }
-
-  .carousel-item img {
-    max-height: 500px;
-    object-fit: cover;
-    filter: brightness(0.75) contrast(1.1);
-    transition: transform 0.8s ease, filter 0.6s ease;
-  }
-
-  .carousel-item:hover img {
-    transform: scale(1.05);
-    filter: brightness(0.95);
-  }
-
-  .carousel-caption {
-    background: rgba(20, 10, 0, 0.7);
-    border: 1px solid rgba(255, 140, 0, 0.3);
+    border: 2px solid rgba(255, 140, 0, 0.3);
     border-radius: 12px;
-    padding: 15px;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 0 10px rgba(255, 150, 0, 0.3);
+    padding: 40px 25px;
+    text-align: center;
+    min-height: 600px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .carousel-caption h5 {
-    font-size: 1.8rem;
-    color: #ffb347;
-    font-weight: bold;
-    text-shadow: 0 0 8px rgba(255, 150, 0, 0.7);
-  }
 
-  .carousel-caption p {
-    font-size: 1rem;
-    color: #e5d3b3;
-  }
-
-  .carousel-control-prev-icon,
-  .carousel-control-next-icon {
-    filter: invert(80%) sepia(60%) saturate(400%) hue-rotate(10deg);
-  }
-
-  .carousel-control-prev:hover span,
-  .carousel-control-next:hover span {
-    transform: scale(1.2);
-  }
-
-  .fade-in {
-    animation: fadeIn 1.5s ease;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* CONTENEDOR DE TODA LA BARAJA */
+  /* ==============================
+          DECK
+     ============================== */
   .deck-container {
     display: flex;
     flex-direction: row;
     position: relative;
-    height: 450px;
-    margin-top: 50px;
-
-    /* ❤️ CENTRAR TODA LA BARAJA */
+    min-height: 600px;
     justify-content: center;
     align-items: center;
+    padding: 30px 0;
+    flex-wrap: nowrap;
   }
 
-  /* TARJETA INDIVIDUAL */
   .deck-card {
     position: relative;
     width: 350px;
@@ -164,49 +118,29 @@
     overflow: hidden;
     cursor: pointer;
     transition: transform 0.3s ease, z-index 0.3s ease;
-
-    /* ENCIMADO HORIZONTAL */
     margin-left: -250px;
   }
 
-  /* 👉 Necesario: la primera carta no debe tener margen negativo */
   .deck-card:first-child {
     margin-left: 0;
   }
 
-  /* Hover */
   .deck-card:hover {
     transform: scale(1.22) translateY(-25px);
     z-index: 99;
   }
 
-  /* Imagen */
   .deck-card img {
     width: 100%;
     height: 55%;
     object-fit: cover;
   }
 
-  /* Contenedor del texto */
   .deck-info {
     padding: 15px;
     font-size: 1rem;
     height: 45%;
     overflow-y: auto;
-    scrollbar-width: thin;
-  }
-
-  .deck-info::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  .deck-info::-webkit-scrollbar-thumb {
-    background: #cb6201;
-    border-radius: 10px;
-  }
-
-  .deck-info::-webkit-scrollbar-track {
-    background: #1a1a1a;
   }
 
   .deck-info h3 {
@@ -214,68 +148,189 @@
     font-size: 1.4rem;
     margin-bottom: 8px;
   }
+
+
+  /* ==============================
+          LORE
+     ============================== */
+
+  .lore-container {
+    display: flex;
+    gap: 40px;
+    margin-top: 20px;
+    align-items: center;
+  }
+
+  .lore-card {
+    width: 60%;
+    background: rgba(20, 10, 0, 0.6);
+    border: 1px solid rgba(255, 140, 0, 0.4);
+    border-radius: 16px;
+    padding: 25px;
+    line-height: 1.7;
+    box-shadow: 0 0 18px rgba(255, 150, 0, 0.25);
+  }
+
+  .lore-img {
+    width: 40%;
+    border-radius: 14px;
+    border: 2px solid rgba(255, 140, 0, 0.4);
+  }
+
+  @media(max-width: 900px) {
+    .lore-container {
+      flex-direction: column;
+    }
+
+    .lore-card,
+    .lore-img {
+      width: 100%;
+    }
+  }
+
+  .text-naranja-brillante {
+    color: #ff8c00;
+    text-shadow:
+      0 0 3px #ff8c00,
+      0 0 6px rgba(255, 120, 0, 0.6);
+  }
 </style>
 
-<section class="hero-section text-center text-light fade-in">
+
+<!-- ============================
+      HERO FULLSCREEN PRINCIPAL
+=============================== -->
+<section class="hero-fullscreen fade-in">
   <div class="container px-4">
-    <h1>Fight Club Café</h1>
-    <p>
-      Un lugar donde las sombras del combate se mezclan con el aroma del café.
-      Aquí, los guerreros descansan, los héroes conspiran y cada sorbo
-      cuenta una historia.
-    </p>
-    <br>
+    <h4>No importa quién seas.
+      <br>
+      No importa de dónde vengas.
+      <br>
+      No importa por qué bajaste los escalones que llevan a este submundo.
+      <br>
+      Ya no eres un visitante.
+      <br><br>
+      Eres un combatiente.
+
+      Bienvenido a...
+    </h4>
+    <h1 class="text-naranja-brillante">Fight Club Café</h1>
     <h2>Jugadores</h2>
-    <h1>{{ usuarios_count }}</h1>
-    <br>
-    <button type="button" class="btn btn-orange mt-3">Ver más</button>
+    <h1 class="text-naranja-brillante">{{ usuarios_count }}</h1>
+    <button class="btn btn-orange mt-3">Ver más</button>
   </div>
 </section>
 
-<section class="text-center" style="align-items: center;">
-  <br>
-  <h1 class="text-center">Personajes</h1>
-  <div class="deck-container mt-5">
-    {% for personaje in personajes %}
-    <div class="deck-card">
-      <img src="{{ personaje.imagen }}" alt="{{ personaje.nombre }}">
-      <div class="deck-info">
-        <h3>{{ personaje.nombre }}</h3>
-        <p><strong>Descripción:</strong> {{ personaje.descripcion }}</p>
-        <p><strong>Daño:</strong> {{ personaje.dano }}</p>
-        <p><strong>Velocidad:</strong> {{ personaje.velocidad }}</p>
+
+
+<!-- ============================
+      PRIMERA DUPLA (Deck izquierda / Hero derecha)
+=============================== -->
+<section class="dual-section">
+
+  <div class="half">
+    <h1 class="text-center">Personajes</h1>
+    <div class="deck-container mt-5">
+      {% for personaje in personajes %}
+      <div class="deck-card">
+        <img src="{{ personaje.imagen }}" alt="{{ personaje.nombre }}">
+        <div class="deck-info">
+          <h3>{{ personaje.nombre }}</h3>
+          <p><strong>Descripción:</strong> {{ personaje.descripcion }}</p>
+          <p><strong>Daño:</strong> {{ personaje.dano }}</p>
+          <p><strong>Velocidad:</strong> {{ personaje.velocidad }}</p>
+        </div>
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
   </div>
-  <br>
-</section>
 
-<section class="text-center" style="align-items: center;">
-  <br>
-  <h1 class="text-center">Items</h1>
-  <div class="deck-container mt-5">
-    {% for item in items %}
-    <div class="deck-card">
-      <img src="{{ item.imagen }}" alt="{{ item.nombre }}">
-      <div class="deck-info">
-        <h3>{{ item.nombre }}</h3>
-        <p><strong>Duración:</strong> {{ item.duracion }}</p>
-        <p><strong>Daño:</strong> {{ item.aumentoDano }}</p>
-        <p><strong>Velocidad:</strong> {{ item.aumentoVelocidad }}</p>
+  <div class="half">
+    <section class="hero-side fade-in">
+      <div>
+        <h1 class="text-center mb-4">Historia</h1>
+
+        <div class="lore-container">
+          <div class="lore-card">
+            En las entrañas de la ciudad de Grano Oscuro, más abajo de los callejones donde se esconde el humo y la
+            miseria, existe un lugar al que nadie llega por accidente. Un sitio del que se susurra en los mercados, que
+            se teme en las tabernas, y que ni los borrachos más valientes se atreverían a mencionar sin voltear a ver si
+            alguien escucha.
+
+            Ese lugar se llama La Caferna.
+
+            No aparece en ningún mapa, y nadie sabe quién la construyó. Algunos dicen que fue un gremio de baristas
+            monjes que buscaban refugio del mundo; otros aseguran que sus muros fueron levantados por luchadores
+            renegados, escapando de la justicia. Lo único que todos coinciden es que La Caferna no invita—escoge.
+
+            Sus puertas solo se abren para quienes llevan algo hirviendo en el alma: rencor, ambición, desesperación, o
+            simplemente una sed tan profunda que ni el café más amargo podría saciar.
+
+            Dentro, el ambiente es espeso, cargado del aroma a granos tostados y sudor viejo. Vasos rotos adornan el
+            suelo como cicatrices, mientras la barra, hecha de madera centenaria, vibra con cada impacto que retumba
+            desde la arena central. Nadie entra buscando café.
+            Pero todos terminan necesitándolo.
+
+            Porque en La Caferna, el café no es una bebida.
+            Es poder.
+            <br><br>Es poder.
+          </div>
+
+          <img src="{% static 'img/2.png' %}" class="lore-img">
+        </div>
       </div>
-    </div>
-    {% endfor %}
+    </section>
   </div>
-  <br>
+
 </section>
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".stack-card").forEach((card, index) => {
-      card.style.setProperty("--i", index);
-    });
-  });
-</script>
+<section class="dual-section">
+
+  <div class="half">
+    <section class="hero-side fade-in">
+      <div>
+        <h1 class="text-center mb-4">Los Diez Granos</h1>
+
+        <div class="lore-container">
+          <div class="lore-card">
+            Cuenta la leyenda que, en lo más profundo de la Caferna, existe un molino antiguo que nunca ha dejado de
+            girar. Nadie lo ha visto funcionar, pero todas las noches se oye su ronquido metálico, como si dentro
+            viviera un monstruo dormido, alimentado por granos que jamás crecieron a la luz del sol.
+
+            Dicen que el café que produce no es normal.
+            Que puede acelerar el corazón hasta hacer ver el futuro.
+            Que vuelve el golpe más torpe en un misil.
+            Que, si lo tomas en exceso… puedes despertar a algo dentro de ti que no sabías que estaba vivo.
+
+            A ese poder se le conoce como Los Diez Granos.
+
+            Y para controlar ese poder, se creó un torneo.
+          </div>
+
+          <img src="{% static 'img/3.png' %}" class="lore-img">
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="half">
+    <h1 class="text-center">Items</h1>
+    <div class="deck-container mt-4">
+      {% for item in items %}
+      <div class="deck-card">
+        <img src="{{ item.imagen }}" alt="{{ item.nombre }}">
+        <div class="deck-info">
+          <h3>{{ item.nombre }}</h3>
+          <p><strong>Duración:</strong> {{ item.duracion }}</p>
+          <p><strong>Daño:</strong> {{ item.aumentoDano }}</p>
+          <p><strong>Velocidad:</strong> {{ item.aumentoVelocidad }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</section>
+
 
 {% endblock %}
