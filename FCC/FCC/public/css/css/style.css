@@ -1,3 +1,6 @@
+/* ============================================
+   TIPOGRAFÍAS
+============================================ */
 .playfair-display {
   font-family: "Playfair Display", serif;
   font-optical-sizing: auto;
@@ -11,6 +14,9 @@
   font-style: normal;
 }
 
+/* ============================================
+   BOTONES
+============================================ */
 .btn-orange {
   font-family: "Playfair Display", serif;
   background-color: #cb6201;
@@ -25,33 +31,6 @@
   border-color: #6c3407;
 }
 
-.navbar-transparent {
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(5px);
-}
-
-.carousel-inner img {
-  max-height: 300px;
-  /* ajusta según lo quieras */
-  object-fit: contain;
-  /* mantiene la imagen completa sin recortar */
-  width: auto;
-  /* ancho automático según la proporción */
-  margin: 0 auto;
-  /* centra la imagen horizontalmente */
-  display: block;
-  /* para centrar correctamente */
-}
-
-/* Inputs */
-.form-control {
-  background-color: #3e2f2f;
-  /* café oscuro */
-  color: #ffd699;
-  /* texto beige */
-  border-color: #aa5522;
-}
-
 /* Botón crear */
 .btn-primary {
   background: linear-gradient(135deg, #ff6b35, #ff9f1c, #ffbf69);
@@ -60,16 +39,27 @@
   font-weight: bold;
 }
 
-/* Card headers */
-.card-header {
-  background-color: #2b1b1b;
-  border-color: #aa5522;
+/* ============================================
+   NAVBAR
+============================================ */
+.navbar-transparent {
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
 }
 
-/* Carousel caption overlay */
+/* ============================================
+   CAROUSEL
+============================================ */
+.carousel-inner img {
+  max-height: 300px;
+  object-fit: contain;
+  width: auto;
+  margin: 0 auto;
+  display: block;
+}
+
 .carousel-caption {
   background-color: rgba(255, 127, 80, 0.8);
-  /* naranja cozy semitransparente */
   color: #2b1b1b;
   border-radius: 8px;
   padding: 10px;
@@ -80,6 +70,34 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
 }
 
+/* ============================================
+   INPUTS
+============================================ */
+.form-control {
+  background-color: #3e2f2f;
+  color: #ffd699;
+  border-color: #aa5522;
+}
+
+/* ============================================
+   CARD HEADERS
+============================================ */
+.card-header {
+  background-color: #2b1b1b;
+  border-color: #aa5522;
+}
+
+/* ============================================
+   BODY (GENERAL Y ADMIN)
+============================================ */
+body {
+  background-color: #6d2400;
+  color: #e0e0e0;
+  font-family: "VT323", monospace !important;
+  font-weight: 400;
+  font-style: normal;
+}
+
 body.admin {
   background-color: #121212;
   color: #e0e0e0;
@@ -87,13 +105,15 @@ body.admin {
   overflow-x: hidden;
 }
 
+/* ============================================
+   SIDEBAR ADMIN
+============================================ */
 .admin .sidebar {
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
   width: 70px;
-  /* compacta */
   background-color: #101010;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.6);
   display: flex;
@@ -183,11 +203,11 @@ body.admin {
   transition: margin-left 0.3s ease;
 }
 
-.admin .sidebar:hover~main {
+.admin .sidebar:hover ~ main {
   margin-left: 250px;
 }
 
-@media (max-width: 992px) {
+@media(max-width: 992px) {
   .admin .sidebar {
     width: 0;
     opacity: 0;
@@ -216,10 +236,177 @@ body.admin {
   cursor: pointer;
 }
 
-body {
-  background-color: #121212;
-  color: #e0e0e0;
-  font-family: "VT323", monospace !important;
-  font-weight: 400;
-  font-style: normal;
+/* ============================================
+   INDEX PAGE (HERO, DECK, LORE)
+============================================ */
+
+/* HERO FULLSCREEN */
+.hero-fullscreen {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(20, 10, 0, 0.8)),
+    url("../../img/index.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  color: #fff;
+}
+
+.hero-fullscreen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 150, 0, 0.1), transparent 70%);
+  z-index: 0;
+}
+
+/* HERO SIDE */
+.hero-side {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(20, 10, 0, 0.85)),
+    url("../../img/index.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  border: 2px solid rgba(255, 140, 0, 0.3);
+  border-radius: 12px;
+  padding: 40px 25px;
+  text-align: center;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* DECK */
+.deck-container {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  min-height: 600px;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 0;
+  flex-wrap: nowrap;
+}
+
+.deck-card {
+  position: relative;
+  width: 350px;
+  height: 450px;
+  background: #1a1a1a;
+  border: 3px solid #cb6201;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, z-index 0.3s ease;
+  margin-left: -250px;
+}
+
+.deck-card:first-child {
+  margin-left: 0;
+}
+
+.deck-card:hover {
+  transform: scale(1.22) translateY(-25px);
+  z-index: 99;
+}
+
+.deck-card img {
+  width: 100%;
+  height: 55%;
+  object-fit: cover;
+}
+
+.deck-info {
+  padding: 15px;
+  font-size: 1rem;
+  height: 45%;
+  overflow-y: auto;
+}
+
+.deck-info h3 {
+  color: #ffb347;
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
+
+/* LORE */
+.lore-container {
+  display: flex;
+  gap: 40px;
+  margin-top: 20px;
+  align-items: center;
+  position: relative;
+}
+
+.lore-card {
+  width: 60%;
+  background: rgba(20, 10, 0, 0.6);
+  border: 1px solid rgba(255, 140, 0, 0.4);
+  border-radius: 16px;
+  padding: 25px;
+  line-height: 1.7;
+  box-shadow: 0 0 18px rgba(255, 150, 0, 0.25);
+}
+
+.lore-img {
+  width: 40%;
+  border-radius: 14px;
+  border: 2px solid rgba(255, 140, 0, 0.4);
+  transform-origin: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, z-index 0.3s ease;
+}
+
+.lore-img:hover {
+  transform: scale(1.22) translateY(-25px);
+  z-index: 99;
+}
+
+@media(max-width: 900px) {
+  .lore-container {
+    flex-direction: column;
+  }
+  .lore-card,
+  .lore-img {
+    width: 100%;
+  }
+}
+
+/* TEXTO */
+.text-naranja-brillante {
+  color: #ff8c00;
+  text-shadow: 0 0 3px #ff8c00, 0 0 6px rgba(255, 120, 0, 0.6);
+}
+
+/* DUAL SECTIONS */
+.dual-section {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px 0;
+}
+
+.dual-section.reverse {
+  flex-direction: row-reverse;
+}
+
+.dual-section > .half {
+  width: 50%;
+}
+
+@media(max-width: 900px) {
+  .dual-section,
+  .dual-section.reverse {
+    flex-direction: column;
+  }
+  .dual-section > .half {
+    width: 100%;
+  }
 }
