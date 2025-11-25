@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import mimetypes
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
@@ -22,6 +23,7 @@ SECRET_KEY = 'django-insecure-o)z$v220@0n0-^-h+st5rpxym8(0v!wwjpwo+=65lbk#5z#^5h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+mimetypes.add_type('application/manifest+json', '.json', True)
 ALLOWED_HOSTS = []
 
 
@@ -115,6 +117,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     'FCC/public',
 ]

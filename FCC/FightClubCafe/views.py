@@ -9,6 +9,10 @@ import uuid
 
 # Create your views here.
 
+
+def offline(request):
+    return render(request, 'offline.html', status=200)
+
 ##################
 ## AUTH SECTION ##
 ##################

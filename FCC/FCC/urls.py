@@ -20,6 +20,7 @@ from FightClubCafe import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('offline/', views.offline, name='offline'),
     
     #GENERAL SECTION
     path('', views.index, name='index'),
