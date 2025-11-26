@@ -15,38 +15,40 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from FightClubCafe import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('offline/', views.offline, name='offline'),
-    
-    #GENERAL SECTION
+
+    # GENERAL SECTION
     path('', views.index, name='index'),
     path('characters/', views.characters, name='characters'),
     path('items/', views.items, name='items'),
     path('chat/', views.chat, name='chat'),
-    
-    ##SESSION SECTION
+
+    # SESSION SECTION
     path('signin/', views.signin, name='signin'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
     path('account/', views.account, name='account'),
-    
-    ##ADMIN SECTION
+
+    # ADMIN SECTION
     path('administrator/', views.administrator, name='administrator'),
-    
-    ##USERS SECTION
+
+    # USERS SECTION
     path('admin_users/', views.admin_users, name='admin_users'),
     path('admin/users/create/', views.create_user, name='create_user'),
     path("admin/users/delete/", views.delete_users, name="delete_users"),
-    
-    ## CHARACTER SECTION
+
+    # CHARACTER SECTION
     path('admin_characters/', views.admin_characters, name='admin_characters'),
     path('create_character/', views.create_character, name='create_character'),
-    
-    ## ITEMS SECTION
+
+    # ITEMS SECTION
     path('admin_items/', views.admin_items, name='admin_items'),
-    
+
+    # PWA
+    path('', include('pwa.urls')),
 ]
+
