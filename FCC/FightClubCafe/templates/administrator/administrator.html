@@ -43,6 +43,7 @@
 
                 <div class="card-body text-center">
                     <h5 class="card-title">Usuarios</h5>
+                    <h6 class="card-title">Total: {{usuarios_count}}</h6>
                     <p class="card-text text-secondary">Administra los usuarios registrados y sus permisos.</p>
                     <a href="{% url 'admin_users' %}" class="btn btn-outline-info mt-2">Ir a Usuarios</a>
                 </div>
@@ -60,6 +61,7 @@
                 {% endif %}
                 <div class="card-body text-center">
                     <h5 class="card-title">Personajes</h5>
+                    <h6 class="card-title">Total: {{characters_count}}</h6>
                     <p class="card-text text-secondary">Gestiona los personajes disponibles en el sistema.</p>
                     <a href="{% url 'admin_characters' %}" class="btn btn-outline-success mt-2">Ir a Personajes</a>
                 </div>
@@ -77,6 +79,7 @@
 
                 <div class="card-body text-center">
                     <h5 class="card-title">Ítems</h5>
+                    <h6 class="card-title">Total: {{items_count}}</h6>
                     <p class="card-text text-secondary">Controla los ítems disponibles y sus propiedades.</p>
                     <a href="{% url 'admin_items' %}" class="btn btn-outline-warning mt-2">Ir a Ítems</a>
                 </div>

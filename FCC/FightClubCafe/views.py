@@ -191,10 +191,20 @@ def administrator(request):
         item = cafe_docs[0].to_dict()
         cafe_img = item.get("imagen")
 
+    usuarios_docs = db.collection("usuarios").stream()
+    usuarios_count = sum(1 for _ in usuarios_docs)
+    characters_docs = db.collection('personajes').stream()
+    characters_count = sum(1 for _ in characters_docs)
+    items_docs = db.collection('cafe').stream()
+    items_count = sum(1 for _ in items_docs)
+
     context = {
         "personajes_img": personajes_img_1,
         "personajes_img_2": personajes_img_2,
         "cafe_img": cafe_img,
+        'usuarios_count':usuarios_count,
+        'characters_count':characters_count,
+        'items_count':items_count,
     }
 
     return render(request, "administrator/administrator.html", context)
