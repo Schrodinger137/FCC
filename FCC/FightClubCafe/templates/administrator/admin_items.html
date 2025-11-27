@@ -25,9 +25,9 @@
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="items-table-body">
                 {% for item in items %}
-                <tr>
+                <tr data-row-id="{{ item.id }}">
                     <td>{{ forloop.counter }}</td>
                     <td>{{ item.nombre }}</td>
                     <td><img src="{{ item.imagen }}" alt="{{ item.nombre }}" class="img-fluid rounded"
@@ -36,7 +36,14 @@
                     <td>{{ item.aumentoVelocidad }}</td>
                     <td>{{ item.aumentoDano }}</td>
                     <td>
-                        <button class="btn btn-warning btn-sm">Editar</button>
+
+                        <button class="btn btn-warning btn-sm edit-item-btn" data-id="{{ item.id }}"
+                            data-nombre="{{ item.nombre }}" data-duracion="{{ item.duracion }}"
+                            data-dano="{{ item.aumentoDano }}" data-velocidad="{{ item.aumentoVelocidad }}"
+                            data-imagen="{{ item.imagen }}">
+                            Editar
+                        </button>
+
                         <form method="POST" action="{% url 'delete_item' item.id %}" style="display:inline;">
                             {% csrf_token %}
                             <button class="btn btn-danger btn-sm"
@@ -52,4 +59,133 @@
 
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        const form = document.querySelector("#createItemForm");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch("{% url 'create_item' %}", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.mensaje);
+
+                    const tbody = document.querySelector("#items-table-body");
+                    const newRow = document.createElement("tr");
+
+                    newRow.innerHTML = `
+                    <td>${tbody.children.length + 1}</td>
+                    <td>${formData.get("nombre")}</td>
+                    <td><img src="${data.imagen_url}" class="img-fluid rounded" style="max-width: 80px; max-height: 80px; object-fit: cover;"></td>
+                    <td>${formData.get("duracion")}</td>
+                    <td>${formData.get("aumentoVelocidad")}</td>
+                    <td>${formData.get("aumentoDano")}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm">Editar</button>
+
+                        <form method="POST" action="/admin_items/delete/${data.id}/" style="display:inline;">
+                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                            <button class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </td>
+                `;
+
+                    tbody.appendChild(newRow);
+                    form.reset();
+
+                    // Cerrar modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById("createItemModal"));
+                    modal.hide();
+
+                } else {
+                    alert(data.error);
+                }
+
+            } catch (error) {
+                alert("Error al crear el item");
+                console.error("ERROR CREATE:", error);
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        const editButtons = document.querySelectorAll(".edit-item-btn");
+        const editForm = document.querySelector("#editItemForm");
+
+        // Abrir modal con datos cargados
+        editButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+
+                document.querySelector("#edit-item-id").value = btn.dataset.id;
+                document.querySelector("#edit-nombre").value = btn.dataset.nombre;
+                document.querySelector("#edit-duracion").value = btn.dataset.duracion;
+                document.querySelector("#edit-aumentoDano").value = btn.dataset.dano;
+                document.querySelector("#edit-aumentoVelocidad").value = btn.dataset.velocidad;
+                document.querySelector("#edit-imagen").value = btn.dataset.imagen;
+
+                const modal = new bootstrap.Modal(document.getElementById("editItemModal"));
+                modal.show();
+            });
+        });
+
+
+        // Enviar edición al servidor
+        editForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const itemId = document.querySelector("#edit-item-id").value;
+            const formData = new FormData(editForm);
+
+            try {
+                const response = await fetch(`/admin_items/edit/${itemId}/`, {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+
+                    alert(data.mensaje);
+
+                    // Actualizar la fila en la tabla
+                    const row = document.querySelector(`tr[data-row-id="${itemId}"]`);
+
+                    row.querySelector(".item-nombre").textContent = formData.get("nombre");
+                    row.querySelector(".item-duracion").textContent = formData.get("duracion");
+                    row.querySelector(".item-dano").textContent = formData.get("aumentoDano");
+                    row.querySelector(".item-velocidad").textContent = formData.get("aumentoVelocidad");
+                    row.querySelector(".item-img").src = formData.get("imagen");
+
+                    // Cerrar modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById("editItemModal"));
+                    modal.hide();
+
+                } else {
+                    alert(data.error);
+                }
+
+            } catch (err) {
+                console.error("ERROR UPDATE:", err);
+                alert("Error al actualizar el item");
+            }
+        });
+
+    });
+</script>
+
+
 {% endblock %}

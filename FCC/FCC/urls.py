@@ -43,10 +43,14 @@ urlpatterns = [
 
     # CHARACTER SECTION
     path('admin_characters/', views.admin_characters, name='admin_characters'),
+    path('admin_characters/create/', views.create_character, name='create_character'),
+    path("admin_characters/edit/<str:character_id>/", views.edit_character, name="edit_character"),
     path('admin_characters/delete/<str:character_id>/', views.delete_character, name='delete_character'),
 
     # ITEMS SECTION
     path('admin_items/', views.admin_items, name='admin_items'),
+    path('admin_items/create/', views.create_item, name='create_item'),
+    path('admin_items/edit/<str:item_id>/', views.edit_item, name='edit_item'),
     path('admin_items/delete/<str:item_id>/', views.delete_item, name='delete_item'),
 
     # PWA

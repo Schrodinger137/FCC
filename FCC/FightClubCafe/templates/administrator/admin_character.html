@@ -28,21 +28,26 @@
             <th scope="col">Acciones</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="personajes-table-body">
           {% for personaje in personajes %}
-          <tr>
+          <tr data-character-id="{{ personaje.id }}">
             <td>{{ forloop.counter }}</td>
-            <td>{{ personaje.nombre }}</td>
-            <td>{{ personaje.descripcion }}</td>
-            <td>{{ personaje.dano }}</td>
-            <td>{{ personaje.velocidad }}</td>
+            <td class="char-nombre">{{ personaje.nombre }}</td>
+            <td class="char-descripcion">{{ personaje.descripcion }}</td>
+            <td class="char-dano">{{ personaje.dano }}</td>
+            <td class="char-velocidad">{{ personaje.velocidad }}</td>
             <td>
               <img src="{{ personaje.imagen }}" alt="{{ personaje.nombre }}" class="img-fluid rounded"
                 style="max-width: 80px; max-height: 80px; object-fit: cover;">
             </td>
             <td>{{ personaje.jugadores_asociados }}</td>
             <td>
-              <button class="btn btn-warning btn-sm">Editar</button>
+              <button class="btn btn-warning btn-sm edit-character-btn" data-id="{{ personaje.id }}"
+                data-nombre="{{ personaje.nombre }}" data-descripcion="{{ personaje.descripcion }}"
+                data-imagen="{{ personaje.imagen }}" data-dano="{{ personaje.dano }}"
+                data-velocidad="{{ personaje.velocidad }}">
+                Editar
+              </button>
               <form method="POST" action="{% url 'delete_character' personaje.id %}" style="display:inline;">
                 {% csrf_token %}
                 <button class="btn btn-danger btn-sm"
@@ -58,5 +63,135 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+
+    const form = document.querySelector("#createCharacterForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch("{% url 'create_character' %}", {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+
+          alert(data.mensaje);
+
+          const tbody = document.querySelector("#personajes-table-body");
+          const newRow = document.createElement("tr");
+
+          newRow.innerHTML = `
+                    <td>${tbody.children.length + 1}</td>
+                    <td>${formData.get("nombre")}</td>
+                    <td>${formData.get("descripcion")}</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>
+                        <img src="${data.imagen_url}" style="max-width:80px; max-height:80px; object-fit:cover;" class="rounded">
+                    </td>
+                    <td>0</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm">Editar</button>
+
+                        <form method="POST" action="/admin_characters/delete/${data.id}/" style="display:inline;">
+                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                            <button class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </td>
+                `;
+
+          tbody.appendChild(newRow);
+
+          form.reset();
+
+          // Cerrar modal
+          const modal = bootstrap.Modal.getInstance(document.getElementById("createCharacterModal"));
+          modal.hide();
+
+        } else {
+          alert(data.error);
+        }
+
+      } catch (error) {
+        alert("Error al crear el personaje");
+        console.error("ERROR CREATE:", error);
+      }
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+
+    const editButtons = document.querySelectorAll(".edit-character-btn");
+    const editForm = document.querySelector("#editCharacterForm");
+
+    // Abrir modal y cargar datos
+    editButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelector("#edit-character-id").value = btn.dataset.id;
+        document.querySelector("#edit-nombre").value = btn.dataset.nombre;
+        document.querySelector("#edit-descripcion").value = btn.dataset.descripcion;
+        document.querySelector("#edit-imagen").value = btn.dataset.imagen;
+        document.querySelector("#edit-dano").value = btn.dataset.dano;
+        document.querySelector("#edit-velocidad").value = btn.dataset.velocidad;
+
+
+        const modal = new bootstrap.Modal(document.getElementById("editCharacterModal"));
+        modal.show();
+      });
+    });
+
+    // Enviar edición a Django
+    editForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const characterId = document.querySelector("#edit-character-id").value;
+      const formData = new FormData(editForm);
+
+      try {
+        const response = await fetch(`/admin_characters/edit/${characterId}/`, {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+
+          alert(data.mensaje);
+
+          const row = document.querySelector(`tr[data-character-id="${characterId}"]`);
+
+          row.querySelector(".char-nombre").textContent = formData.get("nombre");
+          row.querySelector(".char-descripcion").textContent = formData.get("descripcion");
+          row.querySelector(".char-imagen").src = formData.get("imagen");
+          row.querySelector(".char-dano").textContent = formData.get("dano");
+          row.querySelector(".char-velocidad").textContent = formData.get("velocidad");
+
+          const modal = bootstrap.Modal.getInstance(document.getElementById("editCharacterModal"));
+          modal.hide();
+
+        } else {
+          alert(data.error);
+        }
+
+      } catch (err) {
+        console.error("ERROR UPDATE:", err);
+        alert("Error al actualizar el personaje");
+      }
+    });
+
+  });
+</script>
 
 {% endblock %}

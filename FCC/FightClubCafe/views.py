@@ -328,51 +328,68 @@ def create_character(request):
 
     verify = verify_admin(request)
     if verify:
-        return JsonResponse(
-            {"error": "No tienes permisos para esta acción."}, status=403
-        )
+        return verify
 
-    if request.method != "POST":
-        return JsonResponse({"error": "Método no permitido."}, status=405)
+    if request.method == "POST":
 
-    nombre = request.POST.get("nombre")
-    descripcion = request.POST.get("descripcion")
-    imagen = request.FILES.get("imagen")
+        nombre = request.POST.get("nombre")
+        descripcion = request.POST.get("descripcion")
+        imagen_url = request.POST.get("imagen")
+        dano = request.POST.get("dano")
+        velocidad = request.POST.get("velocidad")
 
-    if not nombre or not descripcion:
-        return JsonResponse(
-            {"error": "Nombre y descripción son obligatorios."}, status=400
-        )
+        new_character = {
+            "nombre": nombre,
+            "descripcion": descripcion,
+            "imagen": imagen_url,
+            "dano": dano,           # se queda string
+            "velocidad": velocidad  # se queda string
+        }
 
-    try:
-        imagen_url = None
-        if imagen:
-            imagen_nombre = f"personajes/{uuid.uuid4()}_{imagen.name}"
-            blob = bucket.blob(imagen_nombre)
-            blob.upload_from_file(imagen, content_type=imagen.content_type)
-            blob.make_public()
-            imagen_url = blob.public_url
+        _, ref = db.collection("personajes").add(new_character)
 
-        personaje_ref = db.collection("personajes").add(
-            {
-                "nombre": nombre,
-                "descripcion": descripcion,
-                "imagen_url": imagen_url,
-            }
-        )
+        return JsonResponse({
+            "mensaje": "Personaje creado correctamente",
+            "id": ref.id,
+            "imagen_url": imagen_url
+        })
 
-        return JsonResponse(
-            {
-                "mensaje": "Personaje creado correctamente.",
-                "id": personaje_ref[1].id,
-                "imagen_url": imagen_url,
-            }
-        )
+    return JsonResponse({"error": "Método no permitido"}, status=400)
 
-    except Exception as e:
-        return JsonResponse(
-            {"error": f"Error al crear personaje: {str(e)}"}, status=500
-        )
+
+
+def edit_character(request, character_id):
+
+    verify = verify_admin(request)
+    if verify:
+        return verify
+
+    if request.method == "POST":
+
+        nombre = request.POST.get("nombre")
+        descripcion = request.POST.get("descripcion")
+        imagen_url = request.POST.get("imagen")
+        dano = request.POST.get("dano")
+        velocidad = request.POST.get("velocidad")
+
+        db.collection("personajes").document(character_id).update({
+            "nombre": nombre,
+            "descripcion": descripcion,
+            "imagen": imagen_url,
+            "dano": dano,           # string OK
+            "velocidad": velocidad  # string OK
+        })
+
+        return JsonResponse({
+            "mensaje": "Personaje actualizado correctamente",
+            "id": character_id,
+            "imagen": imagen_url
+        })
+
+    return JsonResponse({"error": "Método no permitido"}, status=400)
+
+
+
 
 def delete_character(request, character_id):
 
@@ -409,6 +426,71 @@ def admin_items(request):
         items.append(item_data)
 
     return render(request, "administrator/admin_items.html", {"items": items})
+
+
+def create_item(request):
+
+    verify = verify_admin(request)
+    if verify:
+        return verify
+
+    if request.method == "POST":
+
+        nombre = request.POST.get("nombre")
+        duracion = request.POST.get("duracion")
+        aumentoDano = request.POST.get("aumentoDano")
+        aumentoVelocidad = request.POST.get("aumentoVelocidad")
+        imagen_url = request.POST.get("imagen")  # <-- URL directa
+
+        new_item = {
+            "nombre": nombre,
+            "duracion": duracion,
+            "aumentoDano": aumentoDano,
+            "aumentoVelocidad": aumentoVelocidad,
+            "imagen": imagen_url,
+        }
+
+        _, ref = db.collection("cafe").add(new_item)
+
+        return JsonResponse({
+            "mensaje": "Item creado correctamente",
+            "id": ref.id,
+            "imagen_url": imagen_url
+        })
+
+    return JsonResponse({"error": "Método no permitido"}, status=400)
+
+
+def edit_item(request, item_id):
+
+    verify = verify_admin(request)
+    if verify:
+        return verify
+
+    if request.method == "POST":
+        nombre = request.POST.get("nombre")
+        duracion = request.POST.get("duracion")
+        aumentoDano = request.POST.get("aumentoDano")
+        aumentoVelocidad = request.POST.get("aumentoVelocidad")
+        imagen_url = request.POST.get("imagen")
+
+        db.collection("cafe").document(item_id).update({
+            "nombre": nombre,
+            "duracion": duracion,
+            "aumentoDano": aumentoDano,
+            "aumentoVelocidad": aumentoVelocidad,
+            "imagen": imagen_url,
+        })
+
+        return JsonResponse({
+            "mensaje": "Item actualizado correctamente",
+            "id": item_id,
+            "imagen": imagen_url
+        })
+
+    return JsonResponse({"error": "Método no permitido"}, status=400)
+
+
 
 def delete_item(request, item_id):
 

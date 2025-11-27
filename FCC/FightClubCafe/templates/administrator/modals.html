@@ -1,56 +1,59 @@
 <!--MI CUENTA MODAL-->
 
 <div class="modal fade" id="myAccountModal" tabindex="-1" aria-labelledby="myAccountModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content bg-dark text-light">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="myAccountModalLabel">Mi cuenta</h1>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="myAccountModalLabel">Mi cuenta</h1>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
 
-      <div class="modal-body">
-        <div class="d-flex flex-row align-items-stretch">
-          <div class="col-5">
-            <img src="{{ current_user.personaje.imagen }}" 
-                 alt="{{ current_user.personaje.nombre }}" 
-                 class="img-fluid rounded-start w-100 h-100" 
-                 style="object-fit: cover;">
-          </div>
+            <div class="modal-body">
+                <div class="d-flex flex-row align-items-stretch">
+                    <div class="col-5">
+                        <img src="{{ current_user.personaje.imagen }}" alt="{{ current_user.personaje.nombre }}"
+                            class="img-fluid rounded-start w-100 h-100" style="object-fit: cover;">
+                    </div>
 
-          <div class="col-7 ps-4">
-            <form>
-              <fieldset disabled>
-                <div class="mb-3">
-                  <label for="nombreInput" class="form-label">Nombre</label>
-                  <input type="text" id="nombreInput" class="form-control" placeholder="{{ current_user.nombre }}">
+                    <div class="col-7 ps-4">
+                        <form>
+                            <fieldset disabled>
+                                <div class="mb-3">
+                                    <label for="nombreInput" class="form-label">Nombre</label>
+                                    <input type="text" id="nombreInput" class="form-control"
+                                        placeholder="{{ current_user.nombre }}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="correoInput" class="form-label">Correo</label>
+                                    <input type="text" id="correoInput" class="form-control"
+                                        placeholder="{{ current_user.correo }}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="passInput" class="form-label">Contraseña</label>
+                                    <input type="password" id="passInput" class="form-control"
+                                        placeholder="{{ current_user.contraseña }}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="personajeInput" class="form-label">Personaje</label>
+                                    <input type="text" id="personajeInput" class="form-control"
+                                        placeholder="{{ current_user.personaje.nombre }}">
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
                 </div>
+            </div>
 
-                <div class="mb-3">
-                  <label for="correoInput" class="form-label">Correo</label>
-                  <input type="text" id="correoInput" class="form-control" placeholder="{{ current_user.correo }}">
-                </div>
-
-                <div class="mb-3">
-                  <label for="passInput" class="form-label">Contraseña</label>
-                  <input type="password" id="passInput" class="form-control" placeholder="{{ current_user.contraseña }}">
-                </div>
-
-                <div class="mb-3">
-                  <label for="personajeInput" class="form-label">Personaje</label>
-                  <input type="text" id="personajeInput" class="form-control" placeholder="{{ current_user.personaje.nombre }}">
-                </div>
-              </fieldset>
-            </form>
-          </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary">Guardar cambios</button>
+            </div>
         </div>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Guardar cambios</button>
-      </div>
     </div>
-  </div>
 </div>
 
 
@@ -142,8 +145,17 @@
                         <input type="text" class="form-control" id="descripcion" name="descripcion" required>
                     </div>
                     <div class="mb-3">
-                        <label for="imagen" class="form-label">Imagen</label>
-                        <input type="file" class="form-control" id="imagen" name="imagen">
+                        <label class="form-label">Daño</label>
+                        <input type="number" class="form-control" id="dano" name="dano" min="0" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Velocidad</label>
+                        <input type="number" class="form-control" id="velocidad" name="velocidad" min="0" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="imagen" class="form-label">URL de Imagen</label>
+                        <input type="url" class="form-control" id="imagen" name="imagen" placeholder="https://..."
+                            required>
                     </div>
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary">Guardar</button>
@@ -153,14 +165,64 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="createItemModal" tabindex="-1" aria-labelledby="createItemModalLabel"
+
+<div class="modal fade" id="editCharacterModal" tabindex="-1" aria-labelledby="editCharacterModalLabel"
     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="editCharacterModalLabel">Editar Personaje</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="editCharacterForm" method="POST">
+                    {% csrf_token %}
+
+                    <input type="hidden" id="edit-character-id" name="character_id">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="edit-nombre" name="nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="edit-descripcion" name="descripcion" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Daño</label>
+                        <input type="number" class="form-control" id="edit-dano" name="dano" min="0" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Velocidad</label>
+                        <input type="number" class="form-control" id="edit-velocidad" name="velocidad" min="0" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">URL de Imagen</label>
+                        <input type="url" class="form-control" id="edit-imagen" name="imagen" required>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-warning">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="createItemModal" tabindex="-1" aria-labelledby="createItemModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content bg-dark">
             <div class="modal-header">
@@ -176,12 +238,21 @@
                             required>
                     </div>
                     <div class="mb-3">
-                        <label for="descripcion" class="form-label">Descripción</label>
-                        <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+                        <label for="duracion" class="form-label">Duración</label>
+                        <input type="text" class="form-control" id="duracion" name="duracion" required>
                     </div>
                     <div class="mb-3">
-                        <label for="imagen" class="form-label">Imagen</label>
-                        <input type="file" class="form-control" id="imagen" name="imagen">
+                        <label for="aumentoDano" class="form-label">Bonificación de Daño</label>
+                        <input type="text" class="form-control" id="aumentoDano" name="aumentoDano" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="aumentoVelocidad" class="form-label">Bonificación de Velocidad</label>
+                        <input type="text" class="form-control" id="aumentoVelocidad" name="aumentoVelocidad" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="imagen" class="form-label">URL de Imagen</label>
+                        <input type="url" class="form-control" id="imagen" name="imagen" placeholder="https://..."
+                            required>
                     </div>
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary">Guardar</button>
@@ -191,8 +262,61 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editItemModal" tabindex="-1" aria-labelledby="editItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="editItemModalLabel">Editar Item</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="editItemForm" method="POST">
+                    {% csrf_token %}
+
+                    <input type="hidden" id="edit-item-id" name="item_id">
+
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="edit-nombre" name="nombre" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Duración</label>
+                        <input type="text" class="form-control" id="edit-duracion" name="duracion" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Bonificación de Daño</label>
+                        <input type="text" class="form-control" id="edit-aumentoDano" name="aumentoDano" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Bonificación de Velocidad</label>
+                        <input type="text" class="form-control" id="edit-aumentoVelocidad" name="aumentoVelocidad"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">URL de Imagen</label>
+                        <input type="url" class="form-control" id="edit-imagen" name="imagen" required>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-warning">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+
         </div>
     </div>
 </div>

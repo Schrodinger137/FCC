@@ -31,27 +31,26 @@
             <td>{{ usuario.correo }}</td>
             <td>
               {% if usuario.personaje %}
-                {{ usuario.personaje.nombre }}
+              {{ usuario.personaje.nombre }}
               {% else %}
-                vacío
+              vacío
               {% endif %}
             </td>
             <td>
               {% if usuario.rol %}
-                {{ usuario.rol }}
+              {{ usuario.rol }}
               {% else %}
-                usuario
+              usuario
               {% endif %}
             </td>
             <td>
-              <button class="btn btn-warning btn-sm">Editar</button>
-                        <form method="POST" action="{% url 'delete_user' usuario.id %}" style="display:inline;">
-                            {% csrf_token %}
-                            <button class="btn btn-danger btn-sm"
-                                onclick="return confirm('¿Seguro que deseas eliminar este usuario?');">
-                                Eliminar
-                            </button>
-                        </form>
+              <form method="POST" action="{% url 'delete_user' usuario.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button class="btn btn-danger btn-sm"
+                  onclick="return confirm('¿Seguro que deseas eliminar este usuario?');">
+                  Eliminar
+                </button>
+              </form>
             </td>
           </tr>
           {% empty %}
