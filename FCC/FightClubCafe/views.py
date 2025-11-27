@@ -242,24 +242,50 @@ def admin_users(request):
     return render(request, "administrator/admin_users.html", context)
 
 
-def delete_users(request):
+def create_user(request):
 
-    # Nunca redirigir en un fetch()
+    # Proteger endpoint
     if request.session.get("usuario_rol") not in ["admin", "Admin"]:
         return JsonResponse({"error": "No autorizado"}, status=403)
 
     if request.method != "POST":
         return JsonResponse({"error": "Método no permitido"}, status=405)
 
-    usuario_id = request.POST.get("usuario_id")
+    nombre = request.POST.get("nombre")
+    correo = request.POST.get("correo")
+    password = request.POST.get("password")
+    personaje_id = request.POST.get("personaje_id")
+
+    if not nombre or not correo or not password:
+        return JsonResponse({"error": "Todos los campos son obligatorios"}, status=400)
 
     try:
-        usuario_ref = db.collection("usuarios").document(usuario_id)
-        usuario_ref.update({"eliminado": True})
+        nuevo = db.collection("usuarios").add({
+            "nombre": nombre,
+            "correo": correo,
+            "contraseña": password,
+            "personaje_id": personaje_id,
+            "rol": "usuario",
+            "eliminado": False,
+        })
 
-        return JsonResponse({"mensaje": "Usuario marcado como eliminado"})
+        return JsonResponse({"mensaje": "Usuario creado correctamente"})
+    
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
+
+
+def delete_user(request, user_id):
+
+    verify = verify_admin(request)
+    if verify:
+        return verify
+
+    if request.method == 'POST':
+        db.collection('usuarios').document(user_id).delete()
+        return redirect('admin_users')
+
+    return redirect('admin_users')
 
 
 
@@ -296,39 +322,6 @@ def admin_characters(request):
     return render(
         request, "administrator/admin_character.html", {"personajes": personajes}
     )
-
-
-def create_user(request):
-
-    # Proteger endpoint
-    if request.session.get("usuario_rol") not in ["admin", "Admin"]:
-        return JsonResponse({"error": "No autorizado"}, status=403)
-
-    if request.method != "POST":
-        return JsonResponse({"error": "Método no permitido"}, status=405)
-
-    nombre = request.POST.get("nombre")
-    correo = request.POST.get("correo")
-    password = request.POST.get("password")
-    personaje_id = request.POST.get("personaje_id")
-
-    if not nombre or not correo or not password:
-        return JsonResponse({"error": "Todos los campos son obligatorios"}, status=400)
-
-    try:
-        nuevo = db.collection("usuarios").add({
-            "nombre": nombre,
-            "correo": correo,
-            "contraseña": password,
-            "personaje_id": personaje_id,
-            "rol": "usuario",
-            "eliminado": False,
-        })
-
-        return JsonResponse({"mensaje": "Usuario creado correctamente"})
-    
-    except Exception as e:
-        return JsonResponse({"error": str(e)}, status=500)
 
 
 def create_character(request):
@@ -381,6 +374,18 @@ def create_character(request):
             {"error": f"Error al crear personaje: {str(e)}"}, status=500
         )
 
+def delete_character(request, character_id):
+
+    verify = verify_admin(request)
+    if verify:
+        return verify
+
+    if request.method == 'POST':
+        db.collection('personajes').document(character_id).delete()
+        return redirect('admin_characters')
+
+    return redirect('admin_characters')
+
 
 #########################
 ## ADMIN ITEMS SECTION ##
@@ -404,3 +409,15 @@ def admin_items(request):
         items.append(item_data)
 
     return render(request, "administrator/admin_items.html", {"items": items})
+
+def delete_item(request, item_id):
+
+    verify = verify_admin(request)
+    if verify:
+        return verify
+
+    if request.method == "POST":
+        db.collection("cafe").document(item_id).delete()
+        return redirect('admin_items')
+
+    return redirect('admin_items')
