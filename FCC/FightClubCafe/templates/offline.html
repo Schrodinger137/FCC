@@ -3,14 +3,12 @@
 
 {% block content %}
 <section class="container d-flex flex-column justify-content-center align-items-center text-center"
-         style="min-height: 70vh; margin-top: 80px;">
+    style="min-height: 70vh; margin-top: 80px;">
 
-    <img src="{% static 'img/noConnection.png' %}" 
-         alt="Sin conexión"
-         class="img-fluid mx-auto d-block mb-4"
-         style="max-width: 220px;">
+    <img src="{% static 'img/noConnection.png' %}" alt="Sin conexión" class="img-fluid mx-auto d-block mb-4"
+        style="max-width: 220px;">
 
-    <h3 class="fw-bold mb-3 text-light" >
+    <h3 class="fw-bold mb-3 text-light">
         No tienes conexión a internet
     </h3>
 
@@ -21,6 +19,176 @@
     <a href="/" class="btn btn-outline-light btn-lg px-4" style="border-radius: 12px;">
         Reintentar
     </a>
+
+    <a id="btnGame" class="btn btn-outline-light btn-lg px-4" style="border-radius: 12px; cursor:pointer;">
+        Probar Minijuego Offline
+    </a>
+
+    <canvas id="fightCanvas" width="320" height="180"
+        style="display:none; margin-top:20px; border:1px solid white;"></canvas>
+
+    <div id="fightUI" style="display:none;" class="mt-3 text-light">
+        <p id="battleLog" class="mt-2"></p>
+
+        <h5 class="mt-4"><u>CONTROLES</u></h5>
+        <p class="mt-2">
+            ➤ <b>A</b>: Atacar <br>
+            ➤ <b>S</b>: Defenderse <br>
+            ➤ <b>←</b> / <b>→</b>: Moverse <br>
+        </p>
+    </div>
+
+<script>
+let gameStarted = false;
+
+document.getElementById("btnGame").addEventListener("click", startFight);
+
+function startFight() {
+    if (gameStarted) return; 
+    gameStarted = true;
+
+    const canvas = document.getElementById("fightCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.style.display = "block";
+    document.getElementById("fightUI").style.display = "block";
+
+    canvas.tabIndex = 1;
+    canvas.focus();
+
+    let keys = {};
+
+    const player = {
+        x: 60, hp: 30, w: 20, h: 20,
+        defending: false, attacking: false,
+        attackCooldown: 0
+    };
+
+    const enemy = {
+        x: 240, hp: 30, w: 20, h: 20,
+        cooldown: 0, attacking: false
+    };
+
+    canvas.addEventListener("keydown", e => keys[e.key] = true);
+    canvas.addEventListener("keyup", e => keys[e.key] = false);
+
+    function drawHP() {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 320, 30);
+
+        ctx.fillStyle = "lime";
+        ctx.fillRect(10, 10, player.hp * 3, 10);
+
+        ctx.fillStyle = "red";
+        ctx.fillRect(320 - enemy.hp * 3 - 10, 10, enemy.hp * 3, 10);
+    }
+
+    function drawFighters() {
+        ctx.fillStyle = "#222";
+        ctx.fillRect(0, 30, 320, 150);
+
+        ctx.fillStyle = player.defending ? "#0044ff" : "cyan";
+        ctx.fillRect(player.x, 120, player.w, player.h);
+
+        if (player.attacking) {
+            ctx.fillStyle = "yellow";
+            ctx.fillRect(player.x + player.w, 126, 10, 6);
+        }
+
+        ctx.fillStyle = "orange";
+        ctx.fillRect(enemy.x, 120, enemy.w, enemy.h);
+
+        if (enemy.attacking) {
+            ctx.fillStyle = "red";
+            ctx.fillRect(enemy.x - 10, 126, 10, 6);
+        }
+    }
+
+    function updatePlayer() {
+        if (keys["ArrowRight"]) player.x += 2;
+        if (keys["ArrowLeft"]) player.x -= 2;
+
+        player.x = Math.max(20, Math.min(280, player.x));
+
+        player.defending = keys["s"] || keys["S"];
+
+        if ((keys["a"] || keys["A"]) && player.attackCooldown <= 0) {
+            attackPlayer();
+        }
+
+        if (player.attackCooldown > 0) player.attackCooldown--;
+    }
+
+    function attackPlayer() {
+        player.attacking = true;
+        player.attackCooldown = 30;
+
+        setTimeout(() => player.attacking = false, 150);
+
+        let inRange = Math.abs(player.x - enemy.x) < 28;
+        if (inRange) {
+            let dmg = Math.floor(Math.random() * 6) + 3;
+            enemy.hp -= dmg;
+
+            battleLog.innerHTML = `¡Golpeaste al enemigo por <b>${dmg}</b>!`;
+
+            if (enemy.hp < 0) enemy.hp = 0;
+        }
+    }
+
+    function updateEnemy() {
+        if (enemy.hp <= 0) return;
+
+        if (enemy.x > player.x + 40) enemy.x -= 1;
+        if (enemy.x < player.x + 30) enemy.x += 1;
+
+        if (enemy.cooldown > 0) {
+            enemy.cooldown--;
+            return;
+        }
+
+        let inRange = Math.abs(player.x - enemy.x) < 35;
+        if (inRange) {
+            enemyAttack();
+        }
+    }
+
+    function enemyAttack() {
+        enemy.attacking = true;
+        enemy.cooldown = 60;
+
+        setTimeout(() => enemy.attacking = false, 200);
+
+        let dmg = Math.floor(Math.random() * 4) + 2;
+        if (player.defending) dmg = Math.floor(dmg * 0.2);
+
+        player.hp -= dmg;
+        if (player.hp < 0) player.hp = 0;
+
+        battleLog.innerHTML += `<br>El enemigo te golpea por <b>${dmg}</b>`;
+    }
+
+    function loop() {
+        if (player.hp <= 0 || enemy.hp <= 0) {
+            if (player.hp <= 0) {
+                battleLog.innerHTML += "<br><strong>¡Has perdido! 😵</strong>";
+            } else {
+                battleLog.innerHTML += "<br><strong>¡Has ganado! 🎉</strong>";
+            }
+            return;
+        }
+
+        updatePlayer();
+        updateEnemy();
+
+        drawHP();
+        drawFighters();
+
+        requestAnimationFrame(loop);
+    }
+
+    loop();
+}
+</script>
 
 </section>
 {% endblock %}
