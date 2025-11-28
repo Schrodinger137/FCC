@@ -5,7 +5,8 @@ var filesToCache = [
     '/offline/',
     '/static/css/css/style.css',
     '/static/css/bootstrap.css',
-    '/static/css/bootstrap.min.css'
+    '/static/css/bootstrap.min.css',
+    '/static/img/noConnection.png'
 ];
 
 // Cache on install
