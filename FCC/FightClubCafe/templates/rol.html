@@ -118,156 +118,197 @@ function renderScene(personaje, contenidoHTML) {
 function render() {
   switch(escena) {
 
+    /* ────────────── NARRADOR 1 ────────────── */
     case 0:
-      renderScene("hierro", `
-        <h3>Hierro Rojo</h3>
+      renderScene("narrador", `
+        <h3>Narrador</h3>
         <p>
-          Caminas por los callejones de Grano Oscuro.  
-          Tu armadura rojiza pesa, pero tu misión pesa más.
+          Los callejones de Grano Oscuro respiran niebla y olor a granos tostados.  
+          Entre las sombras, una figura avanza con paso firme: Hierro Rojo.
         </p>
         <p>
-          Buscas a un niño desaparecido…  
-          pero el aroma a café te distrae.
+          Su armadura rojiza refleja brasas vivas. Busca a un niño desaparecido…  
+          pero un aroma tibio y dulce lo envuelve como si tuviera voluntad propia.
         </p>
 
         <button class="btn-perg mt-3" onclick="escena=0.5; render()">Seguir el aroma</button>
-        <button class="btn-perg mt-3" onclick="escena=0.6; render()">Ignorar y seguir tu misión</button>
+        <button class="btn-perg mt-3" onclick="escena=0.6; render()">Resistirse y seguir la misión</button>
       `);
       break;
 
+    /* ────────────── TLACO 1 ────────────── */
     case 0.5:
       renderScene("tlaco", `
         <h3>Don Tlaco</h3>
         <p>
-          “Sabía que vendrías, Hierro Rojo.”  
+          “Ah… Hierro Rojo. El eco de tus pasos llegó antes que tú.”
         </p>
         <p>
-          “Los que cargan justicia… siempre huelen el grano oscuro.”
+          “Los protectores siempre siguen los olores del destino…  
+          aunque crean que solo es café.”
         </p>
 
-        <button class="btn-perg mt-3" onclick="escena=1; render()">¿Quién eres?</button>
-        <button class="btn-perg mt-3" onclick="escena=2; render()">Quítate. Tengo trabajo.</button>
+        <button class="btn-perg mt-3" onclick="escena=1; render()">“¿Quién eres tú?”</button>
+        <button class="btn-perg mt-3" onclick="escena=2; render()">“Apártate.”</button>
       `);
       break;
 
+    /* ────────────── HIERRO 1 ────────────── */
     case 0.6:
       renderScene("hierro", `
         <h3>Hierro Rojo</h3>
         <p>
-          Intentas alejarte…  
-          pero el aroma te persigue como una sombra pegajosa.
+          Te obligas a ignorar el aroma… pero es inútil.  
+          Es como si el aire mismo intentara arrastrarte.
         </p>
         <p>
-          Una figura aparece frente a ti sin hacer ruido.
+          Hasta que una figura se materializa frente a ti sin un solo ruido.
         </p>
 
         <button class="btn-perg mt-3" onclick="escena=0.5; render()">Enfrentarlo</button>
       `);
       break;
 
+    /* ────────────── TLACO 2 ────────────── */
     case 1:
       renderScene("tlaco", `
         <h3>Don Tlaco</h3>
         <p>
-          “Soy el barista mayor de esta ciudad...”  
+          “Soy Don Tlaco, barista mayor de Grano Oscuro…  
+          y custodio de algo más antiguo que estas calles.”
         </p>
         <p>
-          “Y tú… tú apestas a destino, Hierro Rojo.”  
+          “Y tú… llevas olor a propósito.”
         </p>
 
-        <button class="btn-perg mt-3" onclick="escena=8; render()">Hablar como Hierro Rojo</button>
+        <button class="btn-perg mt-3" onclick="escena=8; render()">Responder como Hierro Rojo</button>
         <button class="btn-perg mt-3" onclick="escena=4; render()">Intentar alejarte</button>
       `);
       break;
 
+    /* ────────────── HIERRO 2 ────────────── */
     case 8:
       renderScene("hierro", `
         <h3>Hierro Rojo</h3>
         <p>
-          “No sé qué quieras, viejo…  
-          pero no vine por destino. Vine a ayudar a los míos.”
+          “No creo en destinos.  
+          Creo en la gente que necesita ayuda.”
         </p>
         <p>
-          “Si buscas pelea, no te la recomiendo.”
+          “Si buscas problemas, te advierto: estoy de mal humor.”
         </p>
 
         <button class="btn-perg mt-3" onclick="escena=3; render()">Escuchar</button>
       `);
       break;
 
+    /* ────────────── TLACO 3 ────────────── */
     case 2:
       renderScene("tlaco", `
-        <h3>No tengo tiempo</h3>
-        <p>“Nadie rechaza una invitación de la Caferna.”</p>
-        <button class="btn-perg mt-3" onclick="escena=3; render()">¿Qué invitación?</button>
+        <h3>Don Tlaco</h3>
+        <p>
+          “No puedes rechazar una invitación de la Caferna.”  
+          Su voz es suave… pero firme como un adoquín.
+        </p>
+
+        <button class="btn-perg mt-3" onclick="escena=3; render()">“¿Qué invitación?”</button>
       `);
       break;
 
+    /* ────────────── TLACO EXPLICA LA CAFERNA ────────────── */
     case 3:
       renderScene("tlaco", `
         <h3>La Caferna</h3>
-        <p>“Un sitio que solo acepta a quienes están destinados a luchar.”</p>
+        <p>
+          “Es un lugar de lucha, de humo, de destino.  
+          Solo entra quien está marcado para cambiar algo.”
+        </p>
 
-        <button class="btn-perg mt-3" onclick="escena=5; render()">¿Por qué yo?</button>
-        <button class="btn-perg mt-3" onclick="escena=6; render()">No pienso pelear.</button>
+        <button class="btn-perg mt-3" onclick="escena=5; render()">“¿Por qué yo?”</button>
+        <button class="btn-perg mt-3" onclick="escena=6; render()">“No lucharé.”</button>
       `);
       break;
 
+    /* ────────────── HIERRO 3 ────────────── */
     case 4:
-      renderScene("hierro", `
-        <h3>Intentas alejarte…</h3>
-        <p>
-          Pero Don Tlaco aparece frente a ti otra vez.  
-          No sabes cómo lo hace.
-        </p>
-
-        <button class="btn-perg mt-3" onclick="escena=3; render()">Está bien… habla.</button>
-      `);
-      break;
-
-    case 5:
-      renderScene("tlaco", `
-        <h3>¿Por qué yo?</h3>
-        <p>
-          “Eres Hierro Rojo, defensor de los débiles.  
-          La Caferna necesita a alguien como tú.”
-        </p>
-
-        <button class="btn-perg mt-3" onclick="escena=9; render()">Responder como Hierro Rojo</button>
-      `);
-      break;
-
-    case 9:
       renderScene("hierro", `
         <h3>Hierro Rojo</h3>
         <p>
-          “Si bajo ahí… no será por destino.”  
+          Intentas retroceder…  
+          pero Don Tlaco ya está frente a ti de nuevo.  
+          No sabes si se teletransporta o si simplemente respira a tiempo.
+        </p>
+
+        <button class="btn-perg mt-3" onclick="escena=3; render()">Suspirar y escucharlo</button>
+      `);
+      break;
+
+    /* ────────────── TLACO 4 ────────────── */
+    case 5:
+      renderScene("tlaco", `
+        <h3>¿Por qué tú?</h3>
+        <p>
+          “Porque defiendes a los débiles.  
+          Porque cargas una armadura que pesa más por dentro que por fuera.”
         </p>
         <p>
-          “Será para proteger a quien lo necesite.”  
+          “Porque la Caferna necesita un corazón así.”
+        </p>
+
+        <button class="btn-perg mt-3" onclick="escena=9; render()">Responder</button>
+      `);
+      break;
+
+    /* ────────────── NARRADOR 2 ────────────── */
+    case 9:
+      renderScene("narrador", `
+        <h3>Narrador</h3>
+        <p>
+          El aire se espesa.  
+          Un rumor subterráneo golpea el suelo bajo tus botas.
+        </p>
+        <p>
+          La ciudad calla… como si toda Grano Oscuro esperara tu decisión.
         </p>
 
         <button class="btn-perg mt-3" onclick="escena=7; render()">Descender a la Caferna</button>
       `);
       break;
 
+    /* ────────────── TLACO 5 ────────────── */
     case 6:
       renderScene("tlaco", `
-        <h3>No pienso pelear</h3>
-        <p>“Todos pelean. La vida es eso.”</p>
+        <h3>Don Tlaco</h3>
+        <p>
+          “Todos pelean, Hierro Rojo.  
+          Algunos con espadas… otros con decisiones.”
+        </p>
+        <p>
+          “La Caferna solo te muestra quién eres.”
+        </p>
 
-        <button class="btn-perg mt-3" onclick="escena=9; render()">Aceptar el destino</button>
+        <button class="btn-perg mt-3" onclick="escena=9; render()">Aceptar tu papel</button>
       `);
       break;
 
+    /* ────────────── NARRADOR 3 / FINAL ────────────── */
     case 7:
-      renderScene("hierro", `
-        <h3>La Arena de la Caferna</h3>
+      renderScene("narrador", `
+        <h3>Narrador</h3>
         <p>
-          Bajas por las escaleras húmedas…  
-          La multitud ruge tu nombre.
+          Desciendes por una escalera húmeda, iluminada por brasas flotantes.  
+          El rumor se vuelve rugido.
         </p>
-        <p class="fw-bold text-danger">¡¡HIERRO ROJO!! ¡¡HIERRO ROJO!!</p>
+        <p>
+          Cuando cruzas el arco final, cientos de voces gritan tu nombre:
+        </p>
+        <p class="fw-bold text-danger fs-4">
+          “¡¡HIERRO ROJO!! ¡¡HIERRO ROJO!!”
+        </p>
+
+        <p>
+          La arena espera. Tu destino también.
+        </p>
 
         <h4 class="mt-3">Fin del prólogo.</h4>
 
