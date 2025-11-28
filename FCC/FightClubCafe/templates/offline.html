@@ -36,12 +36,25 @@
             ➤ <b>S</b>: Defenderse <br>
             ➤ <b>←</b> / <b>→</b>: Moverse <br>
         </p>
+
+        <!-- BOTÓN NUEVO -->
+        <button id="retryBtn" class="btn btn-warning mt-3" style="display:none;">
+            Volver a jugar
+        </button>
     </div>
 
 <script>
 let gameStarted = false;
 
 document.getElementById("btnGame").addEventListener("click", startFight);
+document.getElementById("retryBtn").addEventListener("click", restartFight);
+
+function restartFight() {
+    gameStarted = false;
+    document.getElementById("battleLog").innerHTML = "";
+    document.getElementById("retryBtn").style.display = "none";
+    startFight();
+}
 
 function startFight() {
     if (gameStarted) return; 
@@ -167,13 +180,19 @@ function startFight() {
         battleLog.innerHTML += `<br>El enemigo te golpea por <b>${dmg}</b>`;
     }
 
+    function endGame(victory) {
+        if (victory) {
+            battleLog.innerHTML += "<br><strong>¡Has ganado! 🎉</strong>";
+        } else {
+            battleLog.innerHTML += "<br><strong>¡Has perdido! 😵</strong>";
+        }
+
+        document.getElementById("retryBtn").style.display = "inline-block";
+    }
+
     function loop() {
         if (player.hp <= 0 || enemy.hp <= 0) {
-            if (player.hp <= 0) {
-                battleLog.innerHTML += "<br><strong>¡Has perdido! 😵</strong>";
-            } else {
-                battleLog.innerHTML += "<br><strong>¡Has ganado! 🎉</strong>";
-            }
+            endGame(player.hp > 0);
             return;
         }
 
