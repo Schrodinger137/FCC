@@ -11,31 +11,12 @@
   <div class="col mb-3"></div>
 
   <div class="col mb-3">
-    <h5>Sección</h5>
+    <h5>Seccioness</h5>
     <ul class="nav flex-column">
-      <li class="nav-item mb-2"><a href="/" class="nav-link p-0 text-light">Inicio</a></li>
-      <li class="nav-item mb-2"><a href="/features" class="nav-link p-0 text-light">Features</a></li>
-      <li class="nav-item mb-2"><a href="/pricing" class="nav-link p-0 text-light">Precios</a></li>
-      <li class="nav-item mb-2"><a href="/faqs" class="nav-link p-0 text-light">FAQs</a></li>
-      <li class="nav-item mb-2"><a href="/about" class="nav-link p-0 text-light">Acerca de</a></li>
-    </ul>
-  </div>
-
-  <div class="col mb-3">
-    <h5>Redes sociales</h5>
-    <ul class="nav flex-column">
-      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-light">Facebook</a></li>
-      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-light">Instagram</a></li>
-      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-light">Twitter</a></li>
-      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-light">YouTube</a></li>
-    </ul>
-  </div>
-
-  <div class="col mb-3">
-    <h5>Contacto</h5>
-    <ul class="nav flex-column">
-      <li class="nav-item mb-2"><a href="mailto:info@fightclubcafe.com" class="nav-link p-0 text-light">Email</a></li>
-      <li class="nav-item mb-2"><a href="/contact" class="nav-link p-0 text-light">Formulario</a></li>
+      <li class="nav-item mb-2"><a href="{% url 'index' %}" class="nav-link p-0 text-light">Inicio</a></li>
+      <li class="nav-item mb-2"><a href="{% url 'characters' %}" class="nav-link p-0 text-light">Personajes</a></li>
+      <li class="nav-item mb-2"><a href="{% url 'items' %}" class="nav-link p-0 text-light">Items</a></li>
+      <li class="nav-item mb-2"><a href="{% url 'about' %}" class="nav-link p-0 text-light">Acerca de</a></li>
     </ul>
   </div>
 </footer>

@@ -152,6 +152,11 @@ def items(request):
     return render(request, "principal/items.html", context)
 
 
+def about(request):
+
+    return render(request, 'principal/about.html')
+
+
 def chat(request):
     
     return render(request, 'principal/chat.html')

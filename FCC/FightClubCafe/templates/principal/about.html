@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Fight Club Cafe - Acerca del Proyecto{% endblock %}
+
+{% block content %}
+
+<!-- Animate.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<style>
+  /* BORDER RADIUS GLOBAL */
+  .rounded-cozy {
+    border-radius: 16px;
+  }
+
+  /* TARJETAS CON HOVER */
+  .tech-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border-radius: 18px !important;
+  }
+
+  .tech-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 0 18px rgba(255, 140, 0, 0.45);
+  }
+
+  /* CONTENEDOR PRINCIPAL */
+  .main-box {
+    border-radius: 20px;
+    transition: box-shadow 0.3s ease, transform 0.25s ease;
+  }
+
+  .main-box:hover {
+    box-shadow: 0 0 22px rgba(255, 150, 0, 0.28);
+    transform: translateY(-6px);
+  }
+
+  /* LISTA DEL EQUIPO */
+  .team-item {
+    transition: background 0.25s ease, transform 0.2s ease;
+    border-radius: 12px;
+  }
+
+  .team-item:hover {
+    background: rgba(255, 140, 0, 0.15) !important;
+    transform: translateX(6px);
+  }
+</style>
+
+<section class="container py-5" style="margin-top: 80px;">
+
+  <!-- TÍTULO -->
+  <h2 class="text-center mb-5 playfair-display text-naranja-brillante animate__animated animate__fadeInDown"
+      style="font-size: 3rem;">
+    Acerca de Fight Club Cafe
+  </h2>
+
+  <!-- DESCRIPCIÓN PRINCIPAL -->
+  <div class="row justify-content-center mb-5">
+    <div class="col-md-10">
+      <div class="p-4 main-box shadow-lg animate__animated animate__fadeInUp"
+           style="background: rgba(20,10,0,0.65); border: 1px solid #cb6201;">
+        <p class="fs-4 text-center" style="color: #ffd699;">
+          <span class="playfair-display" style="font-size: 2rem;">Fight Club Cafe</span> fue desarrollado
+          durante <strong>4 meses</strong> de trabajo creativo en conjunto, integrando videojuegos,
+          web y aplicación móvil en una sola experiencia.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TARJETAS DE TECNOLOGÍAS -->
+  <div class="row text-center mb-5">
+
+    <h3 class="playfair-display text-naranja-brillante mb-4 animate__animated animate__fadeInUp">
+      Tecnologías Utilizadas
+    </h3>
+
+    <!-- UNITY -->
+    <div class="col-md-4 mb-4">
+      <div class="p-4 tech-card shadow animate__animated animate__zoomIn"
+           style="background: #1a1a1a; border: 2px solid #cb6201;">
+        <img src="{% static 'img/unity.png' %}" class="img-fluid mb-3"
+             style="max-height: 100px; filter: drop-shadow(0 0 6px #cb6201); border-radius: 12px;">
+        <h5 class="playfair-display text-naranja-brillante">Videojuego en Unity</h5>
+        <p class="small" style="color: #ffd699;">
+          Combate, físicas, animaciones y gameplay desarrollados con C#.
+        </p>
+      </div>
+    </div>
+
+    <!-- DJANGO -->
+    <div class="col-md-4 mb-4">
+      <div class="p-4 tech-card shadow animate__animated animate__zoomIn animate__delay-1s"
+           style="background: #1a1a1a; border: 2px solid #cb6201;">
+        <img src="{% static 'img/django.png' %}" class="img-fluid mb-3"
+             style="max-height: 100px; filter: drop-shadow(0 0 6px #cb6201); border-radius: 12px;">
+        <h5 class="playfair-display text-naranja-brillante">Sitio Web en Django</h5>
+        <p class="small" style="color: #ffd699;">
+          Gestión de usuarios, servicios y panel administrativo seguro.
+        </p>
+      </div>
+    </div>
+
+    <!-- IONIC + ANGULAR -->
+    <div class="col-md-4 mb-4">
+      <div class="p-4 tech-card shadow animate__animated animate__zoomIn animate__delay-2s"
+           style="background: #1a1a1a; border: 2px solid #cb6201;">
+        <img src="{% static 'img/ionic.png' %}" class="img-fluid mb-3"
+             style="max-height: 100px; filter: drop-shadow(0 0 6px #cb6201); border-radius: 12px;">
+        <h5 class="playfair-display text-naranja-brillante">App Móvil en Ionic + Angular</h5>
+        <p class="small" style="color: #ffd699;">
+          Aplicación híbrida rápida, moderna y fácil de usar.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- EQUIPO -->
+  <h3 class="text-center playfair-display text-naranja-brillante fw-bold mb-4 animate__animated animate__fadeInUp">
+    Nuestro Equipo
+  </h3>
+
+  <div class="row justify-content-center mb-5">
+    <div class="col-md-10">
+      <div class="p-4 main-box shadow-lg animate__animated animate__fadeInUp animate__delay-1s"
+           style="background: rgba(20,10,0,0.65); border: 1px solid #cb6201;">
+
+        <ul class="list-group list-group-flush" style="background: transparent;">
+          
+          <li class="list-group-item py-3 team-item"
+              style="background: transparent; border-color: #cb6201;">
+            <span class="playfair-display text-naranja-brillante">Alejandra Tinoco Arredondo</span><br>
+            <span style="color: #ffd699;">Desarrollo móvil (Ionic + Angular)</span>
+          </li>
+
+          <li class="list-group-item py-3 team-item"
+              style="background: transparent; border-color: #cb6201;">
+            <span class="playfair-display text-naranja-brillante">Carina Ponce Osornio</span><br>
+            <span style="color: #ffd699;">Desarrollo del videojuego en Unity</span>
+          </li>
+
+          <li class="list-group-item py-3 team-item"
+              style="background: transparent; border-color: #cb6201;">
+            <span class="playfair-display text-naranja-brillante">Arturo Osiel Arrieta Rangel</span><br>
+            <span style="color: #ffd699;">Documentación y apoyo en Unity</span>
+          </li>
+
+          <li class="list-group-item py-3 team-item"
+              style="background: transparent; border-color: #cb6201;">
+            <span class="playfair-display text-naranja-brillante">Alejandro Govea Martínez</span><br>
+            <span style="color: #ffd699;">Desarrollo del videojuego en Unity</span>
+          </li>
+
+          <li class="list-group-item py-3 team-item"
+              style="background: transparent; border-color: #cb6201;">
+            <span class="playfair-display text-naranja-brillante">Ivo Yaluk Ramos Alanís</span><br>
+            <span style="color: #ffd699;">Desarrollo web con Django</span>
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+  </div>
+
+</section>
+
+{% endblock %}
